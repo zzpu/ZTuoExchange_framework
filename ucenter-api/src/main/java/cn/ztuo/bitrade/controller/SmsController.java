@@ -67,6 +67,7 @@ public class SmsController {
             }
         }
         String randomCode = String.valueOf(GeneratorUtil.getRandomNumber(100000, 999999));
+        log.info("fakeParameters===="+randomCode);
         MessageResult result;
         //253国际短信，可以发国内号码，都要加上区域号
         if(driverName.equalsIgnoreCase("two_five_three")){
@@ -85,6 +86,7 @@ public class SmsController {
             // 缓存验证码
             redisUtil.set(key, randomCode, 10, TimeUnit.MINUTES);
             redisUtil.set(key + "Time", new Date(), 10, TimeUnit.MINUTES);
+
             return success(localeMessageSourceService.getMessage("SEND_SMS_SUCCESS"));
         } else {
             return error(localeMessageSourceService.getMessage("SEND_SMS_FAILED"));

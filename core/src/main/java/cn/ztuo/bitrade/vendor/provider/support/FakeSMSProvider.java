@@ -1,11 +1,9 @@
 package cn.ztuo.bitrade.vendor.provider.support;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
-import cn.ztuo.bitrade.util.HttpSend;
 import cn.ztuo.bitrade.util.MessageResult;
 import cn.ztuo.bitrade.vendor.provider.SMSProvider;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSONObject;
 import org.dom4j.DocumentException;
 
 import java.io.IOException;
@@ -19,12 +17,12 @@ import java.util.regex.Pattern;
  * 云片短信验证码发送类
  */
 @Slf4j
-public class YunpianSMSProvider implements SMSProvider {
+public class FakeSMSProvider implements SMSProvider {
 
     private String gateway;
     private String apikey;
 
-    public YunpianSMSProvider(String gateway, String apikey) {
+    public FakeSMSProvider(String gateway, String apikey) {
         this.gateway = gateway;
         this.apikey = apikey;
     }
@@ -33,7 +31,7 @@ public class YunpianSMSProvider implements SMSProvider {
 
 
     public static String getName() {
-        return "yunpian";
+        return "fake";
     }
 
     @Override
@@ -42,21 +40,11 @@ public class YunpianSMSProvider implements SMSProvider {
         params.put("apikey", apikey);
         params.put("text", content);
         params.put("mobile", mobile);
-        log.info("yunpianParameters====", params.toString());
-        String resultXml= HttpSend.yunpianPost(gateway, params);
-        log.info("result = {}", resultXml);
-        return parseXml(resultXml);
+        log.info("fakeParameters====", params.toString());
+        MessageResult result = new MessageResult(0, "发送成功");
+        return result;
     }
 
-//    public static void main(String[] args) {
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put("apikey", "5a3a506f2b8a1074a3618890b8951e71");
-//        params.put("text", "【coinmany】您的验证码是123456，请按页面提示填写，切勿泄露于他人。");
-//        params.put("mobile", "15738776414");
-//        log.info("yunpianParameters====", params.toString());
-//        String resultXml= HttpSend.yunpianPost("https://sms.yunpian.com/v2/sms/single_send.json", params);
-//        log.info("result = {}", resultXml);
-//    }
 
     @Override
     public MessageResult sendInternationalMessage(String mobile, String content) throws IOException, DocumentException {
@@ -65,9 +53,9 @@ public class YunpianSMSProvider implements SMSProvider {
         params.put("apikey", apikey);
         params.put("text", content);
         params.put("mobile", mobile);
-        String resultXml= HttpSend.yunpianPost(gateway, params);
-        log.info("result = {}", resultXml);
-        return parseXml(resultXml);
+        log.info("fakeParameters====", params.toString());
+        MessageResult result = new MessageResult(0, "发送成功");
+        return result;
     }
 
     /**
@@ -93,15 +81,4 @@ public class YunpianSMSProvider implements SMSProvider {
         return sendSingleMessage(content,phone);
     }
 
-    private MessageResult parseXml(String xml) {
-        JSONObject myJsonObject = JSONObject.fromObject(xml);
-        int code = myJsonObject.getInt("code");
-        MessageResult result = new MessageResult(500, "系统错误");
-        if(code == 0)
-        {
-            result.setCode(code);
-            result.setMessage(myJsonObject.getString("msg"));
-        }
-        return result;
-    }
 }

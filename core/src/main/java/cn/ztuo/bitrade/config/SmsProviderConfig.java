@@ -42,6 +42,8 @@ public class SmsProviderConfig {
             return new cn.ztuo.bitrade.vendor.provider.support.QinPengSMSProvider(gateway,username,password);
         } else if(driverName.equalsIgnoreCase(cn.ztuo.bitrade.vendor.provider.support.YunpianSMSProvider.getName())){
             return new cn.ztuo.bitrade.vendor.provider.support.YunpianSMSProvider(gateway,password);
+        } else if(driverName.equalsIgnoreCase(cn.ztuo.bitrade.vendor.provider.support.FakeSMSProvider.getName())){
+            return new cn.ztuo.bitrade.vendor.provider.support.FakeSMSProvider(gateway,password);
         } else {
             return null;
         }

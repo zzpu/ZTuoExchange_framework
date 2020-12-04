@@ -88,8 +88,11 @@ public class CoinExchangeRate {
             base = "CNH";
         }
         String pair = coin+base;
-        if(legalRateMap.containsKey(pair))return legalRateMap.get(pair);
-        else return BigDecimal.ZERO;
+        if(legalRateMap.containsKey(pair)){
+            return legalRateMap.get(pair);
+        } else{
+            return BigDecimal.ZERO;
+        }
     }
 
     /**

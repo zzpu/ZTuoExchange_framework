@@ -156,7 +156,8 @@ public class HuaXinSMSProvider implements SMSProvider {
         return messageResult;
     }
 
-    public MessageResult sendLoginMessage(String ip,String phone) throws Exception {
+    @Override
+    public MessageResult sendLoginMessage(String ip, String phone) throws Exception {
         String content=sendLoginMessage(ip);
         return sendSingleMessage(content,phone);
     }
