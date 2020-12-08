@@ -69,12 +69,12 @@ public class IeoEmptionService extends BaseService {
                 booleanExpressions.add(QIeoEmption.ieoEmption.endTime.lt(date));
             }
         }
-        if (ieoEmptionVO.getId() != null){
+        if (ieoEmptionVO.getId() != null) {
             booleanExpressions.add(QIeoEmption.ieoEmption.id.eq(ieoEmptionVO.getId()));
         }
         Predicate predicate = PredicateUtils.getPredicate(booleanExpressions);
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(ieoEmptionVO.getPageNum() - 1, ieoEmptionVO.getPageSize(), sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(ieoEmptionVO.getPageNum() - 1, ieoEmptionVO.getPageSize(), sort);
         return ieoEmptionDao.findAll(predicate, pageable);
 
     }
@@ -84,11 +84,11 @@ public class IeoEmptionService extends BaseService {
     }
 
     public IeoEmption findById(Long id) {
-        return ieoEmptionDao.findOne(id);
+        return ieoEmptionDao.findById(id).get();
     }
 
     public void del(Long id){
-        ieoEmptionDao.delete(id);
+        ieoEmptionDao.deleteById(id);
     }
     /**
      * 查询正在进行中的活动

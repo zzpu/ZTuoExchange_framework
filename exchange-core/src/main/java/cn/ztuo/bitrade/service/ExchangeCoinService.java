@@ -55,7 +55,7 @@ public class ExchangeCoinService {
     }
 
     public ExchangeCoin findOne(String id) {
-        return coinRepository.findOne(id);
+        return coinRepository.findById(id).get();
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -71,7 +71,7 @@ public class ExchangeCoinService {
 
     public Page<ExchangeCoin> pageQuery(int pageNo, Integer pageSize) {
         Sort orders = Criteria.sortStatic("sort");
-        PageRequest pageRequest = new PageRequest(pageNo - 1, pageSize, orders);
+        PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize, orders);
         return coinRepository.findAll(pageRequest);
     }
 

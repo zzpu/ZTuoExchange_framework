@@ -51,7 +51,7 @@ public class LossThresholdController {
     public MessageResult listLossThreshold(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize")Integer pageSize,BooleanEnum booleanEnum){
         Sort sort = new Sort(Sort.Direction.DESC,"id");
 
-        PageRequest pageRequest = new PageRequest(pageNum-1,pageSize,sort);
+        PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize, sort);
         ArrayList<BooleanExpression> booleanExpressions = new ArrayList<>();
         if(booleanEnum!=null){
             booleanExpressions.add(QLeverCoin.leverCoin.enable.eq(booleanEnum));

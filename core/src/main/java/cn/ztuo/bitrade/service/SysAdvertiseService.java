@@ -54,7 +54,7 @@ public class SysAdvertiseService extends BaseService {
     }
 
     public SysAdvertise findOne(String serialNumber) {
-        return sysAdvertiseDao.findOne(serialNumber);
+        return sysAdvertiseDao.findById(serialNumber).get();
     }
 
     public int getMaxSort(){
@@ -70,13 +70,13 @@ public class SysAdvertiseService extends BaseService {
     }
 
     public void deleteOne(String serialNumber) {
-        sysAdvertiseDao.delete(serialNumber);
+        sysAdvertiseDao.deleteById(serialNumber);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(String[] array) {
         for (String serialNumber : array) {
-            sysAdvertiseDao.delete(serialNumber);
+            sysAdvertiseDao.deleteById(serialNumber);
         }
     }
 

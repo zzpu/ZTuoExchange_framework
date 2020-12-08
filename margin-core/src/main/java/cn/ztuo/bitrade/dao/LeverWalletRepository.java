@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,14 +23,21 @@ import java.util.List;
  * @date 2018/5/25
  */
 public interface LeverWalletRepository extends JpaRepository<LeverWallet, String>,
-        JpaSpecificationExecutor<LeverWallet>, QueryDslPredicateExecutor<LeverWallet> {
+        JpaSpecificationExecutor<LeverWallet>, QuerydslPredicateExecutor<LeverWallet> {
     LeverWallet findByMemberIdAndLeverCoinAndCoinAndIsLock(Long memberId, LeverCoin leverCoin, Coin coin, BooleanEnum isLock);
+
     List<LeverWallet> findByMemberId(Long memberId);
+
     List<LeverWallet> findByMemberIdAndLeverCoin(Long memberId, LeverCoin leverCoin);
+
     List<LeverWallet> findByMemberIdAndIsLock(Long memberId, BooleanEnum isLock);
+
     List<LeverWallet> findByMemberIdAndLeverCoinAndIsLock(Long memberId, LeverCoin leverCoin, BooleanEnum isLock);
+
     List<LeverWallet> findByIsLock(BooleanEnum isLock);
+
     LeverWallet findByMemberIdAndCoinAndLeverCoin(Long memberId, Coin coin, LeverCoin leverCoin);
+
     List<LeverWallet> findByStatus(WalletEnum walletEnum);
 
     @Transactional

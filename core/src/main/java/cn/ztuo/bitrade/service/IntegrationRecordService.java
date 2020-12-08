@@ -33,22 +33,22 @@ public class IntegrationRecordService extends BaseService<IntegrationRecord> {
     public Page<IntegrationRecord> findRecord4Page(IntegrationRecordVO queryVo) {
         QIntegrationRecord qIntegrationRecord = QIntegrationRecord.integrationRecord;
         ArrayList<BooleanExpression> booleanExpressions = new ArrayList<>();
-        if(queryVo.getUserId()!=null){
+        if (queryVo.getUserId() != null) {
             booleanExpressions.add(qIntegrationRecord.memberId.eq(queryVo.getUserId()));
         }
-        if(queryVo.getType()!=null){
+        if (queryVo.getType() != null) {
             booleanExpressions.add(qIntegrationRecord.type.eq(queryVo.getType()));
         }
-        if(StringUtils.isNotEmpty(queryVo.getCreateStartTime())){
+        if (StringUtils.isNotEmpty(queryVo.getCreateStartTime())) {
             booleanExpressions.add(qIntegrationRecord.createTime.gt(DateUtil.strToDate(queryVo.getCreateStartTime())));
         }
-        if(StringUtils.isNotEmpty(queryVo.getCreateEndTime())){
+        if (StringUtils.isNotEmpty(queryVo.getCreateEndTime())) {
             booleanExpressions.add(qIntegrationRecord.createTime.lt(DateUtil.strToDate(queryVo.getCreateEndTime())));
         }
         Predicate predicate = PredicateUtils.getPredicate(booleanExpressions);
-        Sort sort = new Sort(Sort.Direction.DESC,"id");
-        Pageable pageable = new PageRequest(queryVo.getPageNum()-1,queryVo.getPageSize(),sort);
-        return dao.findAll(predicate,pageable);
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(queryVo.getPageNum() - 1, queryVo.getPageSize(), sort);
+        return dao.findAll(predicate, pageable);
     }
 
 

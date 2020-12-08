@@ -32,8 +32,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.9.RELEASE</version>
-		<relativePath />
+        <version>2.2.1.RELEASE</version>
+        <relativePath/>
 		<!-- lookup parent from repository -->
 	</parent>
 
@@ -41,8 +41,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.jdk_version>1.8</project.build.jdk_version>
 		<!-- spring -->
-		<spring-cloud.version>Edgware.RELEASE</spring-cloud.version>
-		<spring-boot_version>1.5.9.RELEASE</spring-boot_version>
+        <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
+        <spring-boot_version>2.2.1.RELEASE</spring-boot_version>
 		<!-- 数据库连接 -->
 		<druid_version>1.1.9</druid_version>
 		<mysql.version>8.0.22</mysql.version>

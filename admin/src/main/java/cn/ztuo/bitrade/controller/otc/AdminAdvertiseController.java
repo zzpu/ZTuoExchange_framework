@@ -53,7 +53,7 @@ public class AdminAdvertiseController extends BaseAdminController {
     public MessageResult detail(Long id) {
         if (id == null)
             return error("id必传");
-        Advertise one = advertiseService.findOne(id);
+        Advertise one = advertiseService.findById(id).get();
         if (one == null)
             return error("没有此id的广告");
         return success(messageSource.getMessage("SUCCESS"), one);

@@ -26,7 +26,7 @@ public class LegalWalletWithdrawService extends TopBaseService<LegalWalletWithdr
     }
 
     public LegalWalletWithdraw findOne(Long id) {
-        return legalWalletWithdrawDao.findOne(id);
+        return legalWalletWithdrawDao.findById(id).get();
     }
 
     //审核通过

@@ -45,7 +45,7 @@ public class SysHelpService extends BaseService {
     }
 
     public SysHelp findOne(Long id) {
-        return sysHelpDao.findOne(id);
+        return sysHelpDao.findById(id).get();
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -97,13 +97,13 @@ public class SysHelpService extends BaseService {
      */
     public Page<SysHelp> findByCondition(int pageNo,int pageSize,SysHelpClassification cate){
         Sort sort = new Sort(new Sort.Order(Sort.Direction.DESC, "sort"));
-        Pageable pageable = new PageRequest(pageNo - 1, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Specification specification = new Specification() {
             List<javax.persistence.criteria.Predicate> predicates = new ArrayList<>();
 
             @Override
             public javax.persistence.criteria.Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                predicates.add(criteriaBuilder.equal(root.get("sysHelpClassification"),cate));
+                predicates.add(criteriaBuilder.equal(root.get("sysHelpClassification"), cate));
                 return criteriaBuilder.and(predicates.toArray(new javax.persistence.criteria.Predicate[predicates.size()]));
             }
         };

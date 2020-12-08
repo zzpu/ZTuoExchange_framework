@@ -100,7 +100,7 @@ public class AideController extends BaseController {
     @RequestMapping("/system/help/{id}")
     public MessageResult sysHelp(@PathVariable(value = "id") long id) {
         //List<SysHelp> list = sysHelpService.findBySysHelpClassification(sysHelpClassification);
-        SysHelp sysHelp = sysHelpService.findOne(id);
+        SysHelp sysHelp = sysHelpService.findById(id).get();
         MessageResult result = MessageResult.success();
         result.setData(sysHelp);
         return result;
@@ -220,7 +220,7 @@ public class AideController extends BaseController {
         if (result != null){
             return success(result);
         }else {
-            SysHelp sysHelp = sysHelpService.findOne(id);
+            SysHelp sysHelp = sysHelpService.findById(id).get();
             redisUtil.set(SysConstant.SYS_HELP_DETAIL+id,sysHelp,SysConstant.SYS_HELP_DETAIL_EXPIRE_TIME,TimeUnit.SECONDS);
             return success(sysHelp);
         }

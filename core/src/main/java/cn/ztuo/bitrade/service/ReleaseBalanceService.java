@@ -91,7 +91,7 @@ public class ReleaseBalanceService extends BaseService {
         // 根据注册时间倒序
         Sort sorts = Criteria.sortStatic("registerTime.desc");
         // 分页
-        PageRequest pageRequest = new PageRequest(releaseBalanceVO.getPageNo() - 1, releaseBalanceVO.getPageSize(), sorts);
+        PageRequest pageRequest = PageRequest.of(releaseBalanceVO.getPageNo() - 1, releaseBalanceVO.getPageSize(), sorts);
         // 返回
         return releaseBalanceDao.findAll(releaseBalance, pageRequest);
     }
@@ -119,7 +119,7 @@ public class ReleaseBalanceService extends BaseService {
         }
         // 根据注册时间倒序
         Sort sorts = Criteria.sortStatic("registerTime.desc");
-        PageRequest pageRequest = new PageRequest(releaseBalanceVO.getPageNo() - 1, releaseBalanceVO.getPageSize(), sorts);
+        PageRequest pageRequest = PageRequest.of(releaseBalanceVO.getPageNo() - 1, releaseBalanceVO.getPageSize(), sorts);
         return releaseBalanceDao.findAll(releaseBalance, pageRequest);
     }
 }

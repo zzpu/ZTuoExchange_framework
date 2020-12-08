@@ -79,7 +79,7 @@ public class MemberController extends BaseAdminController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.MEMBER, operation = "会员Member详情")
     public MessageResult detail(@RequestParam("id") Long id) {
-        Member member = memberService.findOne(id);
+        Member member = memberService.findById(id).get();
         notNull(member, "validate id!");
         List<MemberWallet> list = memberWalletService.findAllByMemberId(member.getId());
         MemberDTO memberDTO = new MemberDTO();
@@ -92,7 +92,7 @@ public class MemberController extends BaseAdminController {
     @PostMapping("delete")
     @AccessLog(module = AdminModule.MEMBER, operation = "删除会员Member")
     public MessageResult delete(@RequestParam(value = "id") Long id) {
-        Member member = memberService.findOne(id);
+        Member member = memberService.findById(id).get();
         notNull(member, "validate id!");
         member.setStatus(CommonStatus.ILLEGAL);// 修改状态非法
         memberService.save(member);
@@ -142,7 +142,7 @@ public class MemberController extends BaseAdminController {
             @PathVariable("id") Long id,
             @RequestParam("status") CertifiedBusinessStatus status,
             @RequestParam("detail") String detail) {
-        Member member = memberService.findOne(id);
+        Member member = memberService.findById(id).get();
         notNull(member, "validate id!");
         //确认是审核中
         isTrue(member.getCertifiedBusinessStatus() == AUDITING, "validate member certifiedBusinessStatus!");
@@ -226,7 +226,7 @@ public class MemberController extends BaseAdminController {
     public MessageResult cancelBusiness(
             @PathVariable("id") Long id,
             @RequestParam("status") CertifiedBusinessStatus status) {
-        Member member = memberService.findOne(id);
+        Member member = memberService.findById(id).get();
         notNull(member, "validate id!");
         //确认是申请取消认证状态
         isTrue(member.getCertifiedBusinessStatus() == CANCEL_AUTH, "validate member certifiedBusinessStatus!");
@@ -277,7 +277,7 @@ public class MemberController extends BaseAdminController {
             return MessageResult.error("缺少参数");
         }
         isTrue(status == AUDITING || status == CANCEL_AUTH, "validate certifiedBusinessStatus!");
-        Member member = memberService.findOne(id);
+        Member member = memberService.findById(id).get();
         notNull(member, "validate id!");
         //查询申请记录
         List<BusinessAuthApply> businessAuthApplyList = businessAuthApplyService.findByMemberAndCertifiedBusinessStatus(member, status);

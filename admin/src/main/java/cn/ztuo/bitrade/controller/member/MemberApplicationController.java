@@ -54,7 +54,7 @@ public class MemberApplicationController extends BaseAdminController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.MEMBER, operation = "会员MemberApplication认证信息详情")
     public MessageResult detail(@RequestParam("id") Long id) {
-        MemberApplication memberApplication = memberApplicationService.findOne(id);
+        MemberApplication memberApplication = memberApplicationService.findById(id).get();
         notNull(memberApplication, "validate id!");
         return success(memberApplication);
     }
@@ -98,7 +98,7 @@ public class MemberApplicationController extends BaseAdminController {
     @AccessLog(module = AdminModule.MEMBER, operation = "会员MemberApplication认证通过审核")
     public MessageResult pass(@PathVariable("id") Long id) {
         //校验
-        MemberApplication application = memberApplicationService.findOne(id);
+        MemberApplication application = memberApplicationService.findById(id).get();
         notNull(application, "validate id!");
 //        Assert.isTrue(application.getAuditStatus()== AuditStatus.AUDIT_ING,"该项审核已经被处理过，请刷新.....");
         Assert.isTrue(application.getKycStatus() == 5 || application.getKycStatus() == 6 || application.getKycStatus
@@ -116,7 +116,7 @@ public class MemberApplicationController extends BaseAdminController {
             @PathVariable("id") Long id,
             @RequestParam(value = "rejectReason", required = false) String rejectReason) {
         //校验
-        MemberApplication application = memberApplicationService.findOne(id);
+        MemberApplication application = memberApplicationService.findById(id).get();
         notNull(application, "validate id!");
 //        Assert.isTrue(application.getAuditStatus()== AuditStatus.AUDIT_ING,"该项审核已经被处理过，请刷新.....");
         Assert.isTrue(application.getKycStatus() == 5 || application.getKycStatus() == 6 || application.getKycStatus

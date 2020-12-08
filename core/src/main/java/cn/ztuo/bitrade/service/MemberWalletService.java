@@ -318,11 +318,11 @@ public class MemberWalletService extends BaseService {
     }
 
     public Page<MemberWallet> pageByCoin(Coin coin,int pageNo,int pageSize){
-        Sort orders = new Sort(new Sort.Order(Sort.Direction.ASC, "id"));
-        PageRequest pageRequest = new PageRequest(pageNo, pageSize, orders);
+        Sort orders = Sort.by(new Sort.Order(Sort.Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, orders);
         Criteria<MemberWallet> specification = new Criteria<MemberWallet>();
         specification.add(Restrictions.eq("coin", coin, true));
-        return memberWalletDao.findAll(specification,pageRequest);
+        return memberWalletDao.findAll(specification, pageRequest);
     }
 
     /**
@@ -364,7 +364,7 @@ public class MemberWalletService extends BaseService {
     public MemberWallet findOneByCoinNameAndMemberId(String coinName, long memberId) {
         BooleanExpression and = QMemberWallet.memberWallet.coin.name.eq(coinName)
                 .and(QMemberWallet.memberWallet.memberId.eq(memberId));
-        return memberWalletDao.findOne(and);
+        return memberWalletDao.findOne(and).get();
     }
 
     public Page<MemberWalletDTO> joinFind(List<Predicate> predicates, QMember qMember , QMemberWallet qMemberWallet, PageModel pageModel) {
@@ -455,7 +455,7 @@ public class MemberWalletService extends BaseService {
             memberTransactionList.add(transaction);
         }
         transactionService.save(memberTransactionList);
-        memberWalletDao.save(memberWalletList);
+        memberWalletDao.saveAll(memberWalletList);
         return MessageResult.success();
     }
 

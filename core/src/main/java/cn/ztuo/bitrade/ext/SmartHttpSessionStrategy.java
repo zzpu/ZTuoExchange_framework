@@ -2,49 +2,52 @@ package cn.ztuo.bitrade.ext;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.session.Session;
-import org.springframework.session.web.http.CookieHttpSessionStrategy;
-import org.springframework.session.web.http.HeaderHttpSessionStrategy;
-import org.springframework.session.web.http.HttpSessionStrategy;
+import org.springframework.session.web.http.CookieHttpSessionIdResolver;
+import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
+import org.springframework.session.web.http.HttpSessionIdResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
-public class SmartHttpSessionStrategy implements HttpSessionStrategy {
-    private CookieHttpSessionStrategy browser;
-    private HeaderHttpSessionStrategy api;
+public class SmartHttpSessionStrategy implements HttpSessionIdResolver {
+    private CookieHttpSessionIdResolver cookie;
+    private HeaderHttpSessionIdResolver xauth;
     private String tokenName = "x-auth-token";
 
-    public SmartHttpSessionStrategy(CookieHttpSessionStrategy browser, HeaderHttpSessionStrategy api) {
-        this.browser = browser;
-        this.api = api;
+    public SmartHttpSessionStrategy(CookieHttpSessionIdResolver cookie, HeaderHttpSessionIdResolver xauth) {
+        this.cookie = cookie;
+        this.xauth = xauth;
     }
 
     @Override
-    public String getRequestedSessionId(HttpServletRequest request) {
-        String paramToken = request.getParameter(tokenName);
-        if (StringUtils.isNotEmpty(paramToken)) {
-            return paramToken;
+    public List<String> resolveSessionIds(HttpServletRequest request) {
+        if (isXAuth(request)) {
+            return xauth.resolveSessionIds(request);
         }
-        return getStrategy(request).getRequestedSessionId(request);
+        return cookie.resolveSessionIds(request);
     }
 
     @Override
-    public void onNewSession(Session session, HttpServletRequest request, HttpServletResponse response) {
-        getStrategy(request).onNewSession(session, request, response);
-    }
-
-    @Override
-    public void onInvalidateSession(HttpServletRequest request, HttpServletResponse response) {
-        getStrategy(request).onInvalidateSession(request, response);
-    }
-
-    private HttpSessionStrategy getStrategy(HttpServletRequest request) {
-        String authType = request.getHeader("x-auth-token");
-        if (authType == null) {
-            return this.browser;
+    public void setSessionId(HttpServletRequest request, HttpServletResponse response, String sessionId) {
+        if (isXAuth(request)) {
+            xauth.setSessionId(request, response, sessionId);
         } else {
-            return this.api;
+            cookie.setSessionId(request, response, sessionId);
         }
+    }
+
+    @Override
+    public void expireSession(HttpServletRequest request, HttpServletResponse response) {
+        if (isXAuth(request)) {
+            xauth.expireSession(request, response);
+        } else {
+            cookie.expireSession(request, response);
+        }
+    }
+
+    private boolean isXAuth(HttpServletRequest request) {
+        return request.getHeader(tokenName) != null;
     }
 }

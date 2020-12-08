@@ -20,7 +20,7 @@ public class VoteService {
     private VoteDao voteDao;
 
     public Vote findById(Long id){
-        return voteDao.findOne(id);
+        return voteDao.findById(id).get();
     }
 
     public Vote findVote(){

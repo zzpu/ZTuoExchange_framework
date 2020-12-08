@@ -110,7 +110,7 @@ public class OrderController extends BaseController{
      */
     @RequestMapping(value = "pre", method = RequestMethod.POST)
     public MessageResult preOrderInfo(long id) {
-        Advertise advertise = advertiseService.findOne(id);
+        Advertise advertise = advertiseService.findById(id).get();
         notNull(advertise, msService.getMessage("PARAMETER_ERROR"));
         isTrue(advertise.getStatus().equals(AdvertiseControlStatus.PUT_ON_SHELVES), msService.getMessage("PARAMETER_ERROR"));
         Member member = advertise.getMember();
@@ -170,7 +170,7 @@ public class OrderController extends BaseController{
                              BigDecimal amount, String remark,
                              @RequestParam(value = "mode", defaultValue = "0") Integer mode,
                              @SessionAttribute(SESSION_MEMBER) AuthMember user) throws InformationExpiredException {
-        Advertise advertise = advertiseService.findOne(id);
+        Advertise advertise = advertiseService.findById(id).get();
         if (advertise == null || !advertise.getAdvertiseType().equals(AdvertiseType.SELL)) {
             return MessageResult.error(msService.getMessage("PARAMETER_ERROR"));
         }
@@ -327,7 +327,7 @@ public class OrderController extends BaseController{
                               @RequestParam(value = "mode", defaultValue = "0") Integer mode,
                               @SessionAttribute(SESSION_MEMBER) AuthMember user) throws InformationExpiredException {
         log.info("登陆用户的信息={}",user);
-        Advertise advertise = advertiseService.findOne(id);
+        Advertise advertise = advertiseService.findById(id).get();
         if (advertise == null || !advertise.getAdvertiseType().equals(AdvertiseType.BUY)) {
             return MessageResult.error(msService.getMessage("PARAMETER_ERROR"));
         }

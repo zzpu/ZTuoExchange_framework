@@ -41,12 +41,12 @@ public class MemberGradeService extends BaseService<MemberGrade> {
 //        Object object = redisUtil.get(SysConstant.CUSTOMER_INTEGRATION_GRADE+id);
 //        MemberGrade memberGrade ;
 //        if(object==null){
-//            memberGrade = dao.findOne(id);
+//            memberGrade = dao.findById(id).get();
 //            redisUtil.set(SysConstant.CUSTOMER_INTEGRATION_GRADE+id,memberGrade);
 //        }else {
 //            memberGrade = (MemberGrade)object;
 //        }
-        return dao.findOne(id);
+        return dao.findById(id).get();
     }
 
     /**

@@ -5,19 +5,20 @@ import cn.ztuo.bitrade.entity.LeverCoin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface LeverCoinRepository extends JpaRepository<LeverCoin, String>,
-        JpaSpecificationExecutor<LeverCoin>, QueryDslPredicateExecutor<LeverCoin> {
+        JpaSpecificationExecutor<LeverCoin>, QuerydslPredicateExecutor<LeverCoin> {
     LeverCoin getBySymbol(String symbol);
 
     List<LeverCoin> findByEnable(BooleanEnum enable);
 
     /**
      * 查询所有的基币
+     *
      * @return
      */
     @Query("select distinct a.baseSymbol from  LeverCoin a where a.enable = 1")

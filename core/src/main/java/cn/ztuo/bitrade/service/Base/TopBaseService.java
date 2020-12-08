@@ -30,7 +30,7 @@ public class TopBaseService<E, D extends BaseDao> {
 
 
     public E findById(Serializable id) {
-        return (E) dao.findOne(id);
+        return (E) dao.findById(id).get();
     }
 
     public List<E> findAll() {
@@ -100,7 +100,7 @@ public class TopBaseService<E, D extends BaseDao> {
      */
     public Pagenation<E> pageQuery(Pagenation pagenation, Predicate predicate) {
         Sort sort = new Sort(pagenation.getPageParam().getDirection(), pagenation.getPageParam().getOrders());
-        Pageable pageable = new PageRequest(pagenation.getPageParam().getPageNo() - 1, pagenation.getPageParam().getPageSize(), sort);
+        Pageable pageable = PageRequest.of(pagenation.getPageParam().getPageNo() - 1, pagenation.getPageParam().getPageSize(), sort);
         Page<E> page = dao.findAll(predicate, pageable);
         return pagenation.setData(page.getContent(), page.getTotalElements(), page.getTotalPages());
     }

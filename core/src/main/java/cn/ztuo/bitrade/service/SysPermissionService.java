@@ -28,7 +28,7 @@ public class SysPermissionService extends BaseService<SysPermission> {
     private SysPermissionDao sysPermissionDao;
 
     public SysPermission findOne(Long id) {
-        return sysPermissionDao.findOne(id);
+        return sysPermissionDao.findById(id).get();
     }
 
     public List<SysPermission> findAll() {

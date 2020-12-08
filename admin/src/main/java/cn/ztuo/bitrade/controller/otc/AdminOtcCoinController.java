@@ -77,7 +77,7 @@ public class AdminOtcCoinController extends BaseAdminController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.OTC, operation = "otc币种otcCoin详情")
     public MessageResult detail(@RequestParam("id") Long id) {
-        OtcCoin one = otcCoinService.findOne(id);
+        OtcCoin one = otcCoinService.findById(id).get();
         notNull(one, "validate otcCoin.id!");
         return success(one);
     }
@@ -111,7 +111,7 @@ public class AdminOtcCoinController extends BaseAdminController {
     public MessageResult memberStatistics(
             @RequestParam("id") Long id,
             @RequestParam("jyRate") BigDecimal jyRate) {
-        OtcCoin one = otcCoinService.findOne(id);
+        OtcCoin one = otcCoinService.findById(id).get();
         notNull(one, "validate otcCoin.id");
         one.setJyRate(jyRate);
         otcCoinService.save(one);

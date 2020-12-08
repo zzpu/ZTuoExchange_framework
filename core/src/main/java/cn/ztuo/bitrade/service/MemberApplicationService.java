@@ -65,7 +65,7 @@ public class MemberApplicationService extends BaseService {
     }
 
     public MemberApplication findOne(Long id) {
-        return memberApplicationDao.findOne(id);
+        return memberApplicationDao.findById(id).get();
     }
 
     public MemberApplication save(MemberApplication memberApplication) {
@@ -141,7 +141,7 @@ public class MemberApplicationService extends BaseService {
             //实名后赠送积分 需要两者都实名 才赠送积分
             try {
                 if(member.getInviterId()!=null) {
-                    Member inviteMember = memberDao.findOne(member.getInviterId());
+                    Member inviteMember = memberDao.findById(member.getInviterId()).get();
                     if(inviteMember.getRealNameStatus()==RealNameStatus.VERIFIED && inviteMember.getKycStatus() == 4) {
                         promotion(inviteMember);
                     }
@@ -165,7 +165,7 @@ public class MemberApplicationService extends BaseService {
         //增加积分并生成记录
         increaseIntegration(inviteMember, dataDictionary);
         if (inviteMember.getInviterId() != null) {
-            Member inviteMember2 = memberDao.findOne(inviteMember.getInviterId());
+            Member inviteMember2 = memberDao.findById(inviteMember.getInviterId()).get();
             if(inviteMember2.getRealNameStatus()==RealNameStatus.VERIFIED) {
                 promotionLevelTwo(inviteMember2);
             }

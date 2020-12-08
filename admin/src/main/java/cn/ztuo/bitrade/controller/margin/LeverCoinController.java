@@ -300,7 +300,7 @@ public class LeverCoinController extends BaseAdminController {
                 leverWalletList = leverWalletService.findByMemberId(memberId);
             } else {
                 Sort sort = new Sort(Sort.Direction.DESC, "id");
-                PageRequest pageRequest = new PageRequest(pageNum - 1, pageSize, sort);
+                PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize, sort);
                 Page<LeverWallet> page = leverWalletService.findAll(null, pageRequest);
                 leverWalletList = page.getContent();
             }

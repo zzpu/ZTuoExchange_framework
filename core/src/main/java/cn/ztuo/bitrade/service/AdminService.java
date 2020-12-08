@@ -46,7 +46,7 @@ public class AdminService extends TopBaseService<Admin, AdminDao> {
     }
 
     public Admin findOne(Long id) {
-        return dao.findOne(id);
+        return dao.findById(id).get();
     }
 
     public Map findAdminDetail(Long id) {

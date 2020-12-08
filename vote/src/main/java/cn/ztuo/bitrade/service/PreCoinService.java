@@ -15,7 +15,7 @@ public class PreCoinService {
     private PreCoinDao preCoinDao;
 
     public PreCoin findById(Long id){
-        return preCoinDao.findOne(id);
+        return preCoinDao.findById(id).get();
     }
 
     public PreCoin save(PreCoin preCoin){

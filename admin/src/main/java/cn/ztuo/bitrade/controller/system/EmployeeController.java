@@ -345,7 +345,7 @@ public class EmployeeController extends BaseAdminController {
         Assert.notNull(id, "admin id 不能为null");
         Assert.notNull(lastPassword, "请输入原密码");
         Assert.notNull(newPassword, "请输入新密码");
-        Admin admin = adminService.findOne(id);
+        Admin admin = adminService.findById(id).get();
         lastPassword = Encrypt.MD5(lastPassword + md5Key);
         Assert.isTrue(lastPassword.equalsIgnoreCase(admin.getPassword()), "密码错误");
         admin.setPassword(Encrypt.MD5(newPassword + md5Key));
@@ -358,7 +358,7 @@ public class EmployeeController extends BaseAdminController {
     @ResponseBody
     public MessageResult resetPassword(Long id) {
         Assert.notNull(id, "admin id 不能为null");
-        Admin admin = adminService.findOne(id);
+        Admin admin = adminService.findById(id).get();
         admin.setPassword(Encrypt.MD5("123456" + md5Key));
         adminService.save(admin);
         return MessageResult.success("重置密码成功，默认密码123456");

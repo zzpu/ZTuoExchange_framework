@@ -30,7 +30,7 @@ public class RewardActivitySettingService extends TopBaseService<RewardActivityS
     }
 
    /* public List<RewardActivitySetting> page(Predicate predicate){
-        Pageable pageable = new PageRequest()
+        Pageable pageable = PageRequest.of()
         Iterable<RewardActivitySetting> iterable = rewardActivitySettingDao.findAll(predicate, QRewardActivitySetting.rewardActivitySetting.updateTime.desc());
         return (List<RewardActivitySetting>) iterable ;
     }*/

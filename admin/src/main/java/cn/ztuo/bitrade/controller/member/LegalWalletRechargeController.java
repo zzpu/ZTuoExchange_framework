@@ -55,7 +55,7 @@ public class LegalWalletRechargeController extends BaseAdminController {
 
     @GetMapping("{id}")
     public MessageResult id(@PathVariable("id") Long id) {
-        LegalWalletRecharge legalWalletRecharge = legalWalletRechargeService.findOne(id);
+        LegalWalletRecharge legalWalletRecharge = legalWalletRechargeService.findById(id).get();
         Assert.notNull(legalWalletRecharge, "validate id!");
         return success(legalWalletRecharge);
     }
@@ -65,8 +65,8 @@ public class LegalWalletRechargeController extends BaseAdminController {
     @Transactional(rollbackFor = Exception.class)
     public MessageResult pass(@PathVariable("id") Long id) {
         //充值校验
-        LegalWalletRecharge legalWalletRecharge = legalWalletRechargeService.findOne(id);
-        MemberTransaction memberTransaction = new MemberTransaction() ;
+        LegalWalletRecharge legalWalletRecharge = legalWalletRechargeService.findById(id).get();
+        MemberTransaction memberTransaction = new MemberTransaction();
         memberTransaction.setAmount(legalWalletRecharge.getAmount());
         memberTransaction.setAddress("");
         memberTransaction.setMemberId(legalWalletRecharge.getMember().getId());
@@ -88,7 +88,7 @@ public class LegalWalletRechargeController extends BaseAdminController {
     //虚假充值
     @PatchMapping("{id}/no-pass")
     public MessageResult noPass(@PathVariable("id") Long id) {
-        LegalWalletRecharge legalWalletRecharge = legalWalletRechargeService.findOne(id);
+        LegalWalletRecharge legalWalletRecharge = legalWalletRechargeService.findById(id).get();
         Assert.notNull(legalWalletRecharge, "validate id!");
         Assert.isTrue(legalWalletRecharge.getState() == LegalWalletState.APPLYING, "申请已经结束!");
         legalWalletRechargeService.noPass(legalWalletRecharge);

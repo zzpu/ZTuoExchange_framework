@@ -64,13 +64,13 @@ public class EmptionRecordService extends BaseService{
         }
         Predicate predicate = PredicateUtils.getPredicate(booleanExpressions);
         Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(emptionRecrodVO.getPageNum() - 1, emptionRecrodVO.getPageSize(), sort);
+        Pageable pageable = PageRequest.of(emptionRecrodVO.getPageNum() - 1, emptionRecrodVO.getPageSize(), sort);
         return emptionRecordDao.findAll(predicate,pageable);
 
     }
 
     public EmptionRecord findById(Long id){
-        return emptionRecordDao.findOne(id);
+        return emptionRecordDao.findById(id).get();
     }
 
 }

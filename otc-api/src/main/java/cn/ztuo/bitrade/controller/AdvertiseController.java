@@ -379,7 +379,7 @@ public class AdvertiseController extends BaseController {
                                             @RequestParam(value = "isCertified", defaultValue = "0") Integer isCertified,
                                             @RequestParam(value = "paymode",required = false) String[] payModes,
                                             @RequestParam(value = "legalCurrency", defaultValue = "NoSupport") String legalCurrency) throws SQLException, DataException {
-        OtcCoin otcCoin = otcCoinService.findOne(id);
+        OtcCoin otcCoin = otcCoinService.findById(id).get();
         MessageResult messageResult = MessageResult.success();
         List<Country> countrys = countryService.findByLegalCurrency(legalCurrency.equalsIgnoreCase("NoSupport")?"CNY":legalCurrency);
         if (countrys.size() <= 0) {

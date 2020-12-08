@@ -28,7 +28,7 @@ public class MemberLevelService extends BaseService {
      * @date 2017/12/27 10:54
      */
     public MemberLevel findOne(Long id){
-        return  memberLevelDao.findOne(id);
+        return memberLevelDao.findById(id).get();
     }
 
     /**

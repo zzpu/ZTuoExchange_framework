@@ -67,7 +67,7 @@ public class HelpController extends BaseAdminController {
     @PostMapping("top")
     @AccessLog(module = AdminModule.CMS, operation = "系统帮助置顶")
     public MessageResult toTop(@RequestParam("id")long id){
-        SysHelp help = sysHelpService.findOne(id);
+        SysHelp help = sysHelpService.findById(id).get();
         int a = sysHelpService.getMaxSort();
         help.setSort(a+1);
         help.setIsTop("0");
@@ -84,7 +84,7 @@ public class HelpController extends BaseAdminController {
     @PostMapping("down")
     @AccessLog(module = AdminModule.CMS, operation = "系统帮助取消置顶")
     public MessageResult toDown(@RequestParam("id")long id){
-        SysHelp help = sysHelpService.findOne(id);
+        SysHelp help = sysHelpService.findById(id).get();
         help.setIsTop("1");
         sysHelpService.save(help);
         return success();
@@ -95,7 +95,7 @@ public class HelpController extends BaseAdminController {
     @PostMapping("/detail")
     @AccessLog(module = AdminModule.CMS, operation = "系统帮助详情")
     public MessageResult detail(@RequestParam(value = "id") Long id) {
-        SysHelp sysHelp = sysHelpService.findOne(id);
+        SysHelp sysHelp = sysHelpService.findById(id).get();
         notNull(sysHelp, "validate id!");
         return success(sysHelp);
     }

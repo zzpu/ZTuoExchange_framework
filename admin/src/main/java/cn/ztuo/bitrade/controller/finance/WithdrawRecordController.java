@@ -121,7 +121,7 @@ public class WithdrawRecordController extends BaseAdminController {
     @RequiresPermissions("finance:withdraw-record:detail")
     @AccessLog(module = AdminModule.FINANCE, operation = "提现记录WithdrawRecord 详情")
     public MessageResult detail(@PathVariable("id") Long id) {
-        WithdrawRecord withdrawRecord = withdrawRecordService.findOne(id);
+        WithdrawRecord withdrawRecord = withdrawRecordService.findById(id).get();
         notNull(withdrawRecord, messageSource.getMessage("NO_DATA"));
         return success(withdrawRecord);
     }
@@ -158,7 +158,7 @@ public class WithdrawRecordController extends BaseAdminController {
     public MessageResult addNumber(
             @RequestParam("id") Long id,
             @RequestParam("transactionNumber") String transactionNumber) {
-        WithdrawRecord record = withdrawRecordService.findOne(id);
+        WithdrawRecord record = withdrawRecordService.findById(id).get();
         Assert.notNull(record, "该记录不存在");
         Assert.isTrue(record.getIsAuto() == BooleanEnum.IS_FALSE, "该提现单为自动审核");
         Assert.isTrue(record.getStatus().equals(WithdrawStatus.WAITING),"提现状态不是等待放币,不能打款!");
@@ -200,7 +200,7 @@ public class WithdrawRecordController extends BaseAdminController {
         }
         WithdrawRecord withdrawRecord;
         for (Long id : ids) {
-            withdrawRecord = withdrawRecordService.findOne(id);
+            withdrawRecord = withdrawRecordService.findById(id).get();
             notNull(withdrawRecord, "id :" + id + messageSource.getMessage("NO_DATA"));
             isTrue(withdrawRecord.getStatus() == WAITING, "提现状态不是等待放币,不能打款!");
             isTrue(withdrawRecord.getIsAuto() == IS_FALSE, "不是人工审核提现!");

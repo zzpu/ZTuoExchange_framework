@@ -40,7 +40,7 @@ public class BusinessAuthApplyService extends BaseService{
         return businessAuthApplyDao.findByMemberOrderByIdDesc(member);
     }
     public BusinessAuthApply findOne(Long id){
-        return businessAuthApplyDao.findOne(id);
+        return businessAuthApplyDao.findById(id).get();
     }
 
     public void create(BusinessAuthApply businessAuthApply){

@@ -63,7 +63,7 @@ public class DepartmentService extends BaseService {
 
     @Transactional(rollbackFor = Exception.class)
     public MessageResult deletes(Long id) {
-        Department department = departmentDao.findOne(id);
+        Department department = departmentDao.findById(id).get();
         List<Admin> list = adminDao.findAllByDepartment(department);
         if (list != null && list.size() > 0) {
             MessageResult result = MessageResult.error("请先删除该部门下的所有用户");

@@ -63,7 +63,7 @@ public class MemberEvent {
                 member.setInviterId(member1.getId());
                 // 父级的父级
                 if(!StringUtils.isEmpty(member1.getInviterId())) {
-                    Member member2 = memberDao.findOne(member1.getInviterId());
+                    Member member2 = memberDao.findb(member1.getInviterId());
                     if (member2 != null) {
                         // 在注册用户存入父级的父级id
                         member.setInviterParentId(member2.getId());

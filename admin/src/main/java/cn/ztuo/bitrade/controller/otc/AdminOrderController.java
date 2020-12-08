@@ -58,7 +58,7 @@ public class AdminOrderController extends BaseController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.OTC, operation = "法币交易订单Order详情")
     public MessageResult detail(Long id) {
-        Order one = orderService.findOne(id);
+        Order one = orderService.findById(id).get();
         if (one == null)
             return error(messageSource.getMessage("NO_DATA"));
         return success(one);
@@ -71,7 +71,7 @@ public class AdminOrderController extends BaseController {
     public MessageResult status(
             @PathVariable("id") Long id,
             @RequestParam("status") OrderStatus status) {
-        Order order = orderService.findOne(id);
+        Order order = orderService.findById(id).get();
         notNull(order, "validate order.id!");
         order.setStatus(status);
         orderService.save(order);

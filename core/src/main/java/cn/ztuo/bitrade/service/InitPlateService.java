@@ -46,7 +46,7 @@ public class InitPlateService extends BaseService {
         return initPlateDao.findAll(specification,pageRequest);
     }
     public InitPlate findByInitPlateId(long id){
-        return initPlateDao.findOne(id);
+        return initPlateDao.findById(id).get();
     }
 
     @Override

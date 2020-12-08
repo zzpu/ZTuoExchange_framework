@@ -5,15 +5,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface RewardWalletDao extends JpaRepository<RewardWallet, String>, JpaSpecificationExecutor<RewardWallet>, QueryDslPredicateExecutor<RewardWallet> {
+public interface RewardWalletDao extends JpaRepository<RewardWallet, String>, JpaSpecificationExecutor<RewardWallet>, QuerydslPredicateExecutor<RewardWallet> {
     /**
      * 根据用户查询奖励钱包
+     *
      * @param memberId
      * @return
      */
