@@ -31,9 +31,10 @@ public class LockPositionRecordService extends BaseService {
     private MemberTransactionDao memberTransactionDao;
 
     public LockPositionRecord findById(Long id){
-        return lockPositionRecordDao.findById(id);
+        return lockPositionRecordDao.findById(id).get();
     }
 
+    @Override
     public Page<LockPositionRecord> findAll(Predicate predicate, PageModel pageModel){
         return lockPositionRecordDao.findAll(predicate,pageModel.getPageable());
     }
@@ -61,7 +62,7 @@ public class LockPositionRecordService extends BaseService {
                 ids.add(lockPositionRecord.getId());
             }
             lockPositionRecordDao.unlockByIds(ids,CommonStatus.ILLEGAL);
-            memberTransactionDao.save(memberTransactionList);
+            memberTransactionDao.saveAll(memberTransactionList);
         }
     }
 

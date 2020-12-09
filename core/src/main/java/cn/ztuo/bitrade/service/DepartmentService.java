@@ -46,12 +46,12 @@ public class DepartmentService extends BaseService {
     }
 
     public Department findOne(Long departmentId) {
-        return departmentDao.findOne(departmentId);
+        return departmentDao.findById(departmentId).get();
     }
 
 
     public Department getDepartmentDetail(Long departmentId) {
-        Department department = departmentDao.findOne(departmentId);
+        Department department = departmentDao.findById(departmentId).get();
         Assert.notNull(department, "该部门不存在");
         return department;
     }
@@ -69,7 +69,7 @@ public class DepartmentService extends BaseService {
             MessageResult result = MessageResult.error("请先删除该部门下的所有用户");
             return result;
         }
-        departmentDao.delete(id);
+        departmentDao.deleteById(id);
         return MessageResult.success("删除成功");
     }
 

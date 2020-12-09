@@ -16,7 +16,7 @@ import cn.ztuo.bitrade.util.BindingResultUtil;
 import cn.ztuo.bitrade.util.Md5;
 import cn.ztuo.bitrade.util.MessageResult;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -379,7 +379,7 @@ public class AdvertiseController extends BaseController {
                                             @RequestParam(value = "isCertified", defaultValue = "0") Integer isCertified,
                                             @RequestParam(value = "paymode",required = false) String[] payModes,
                                             @RequestParam(value = "legalCurrency", defaultValue = "NoSupport") String legalCurrency) throws SQLException, DataException {
-        OtcCoin otcCoin = otcCoinService.findById(id).get();
+        OtcCoin otcCoin = (OtcCoin) otcCoinService.findById(id);
         MessageResult messageResult = MessageResult.success();
         List<Country> countrys = countryService.findByLegalCurrency(legalCurrency.equalsIgnoreCase("NoSupport")?"CNY":legalCurrency);
         if (countrys.size() <= 0) {
@@ -478,7 +478,9 @@ public class AdvertiseController extends BaseController {
         double finalPrice;
 
         //空指针
-        if (list == null || list.getContext() == null) return success("data null!");
+        if (list == null || list.getContext() == null) {
+            return success("data null!");
+        }
 
         for (ScanAdvertise adv : list.getContext()) {
             if (null != adv) {

@@ -37,7 +37,7 @@ public class ChatMessageHandler implements MessageHandler {
         Criteria criteria = new Criteria();
         if(!StringUtils.isEmpty(message.getOrderId()))
             criteria = Criteria.where("orderId").is(message.getOrderId());
-        Sort sort = new Sort(new Sort.Order(Sort.Direction.DESC, message.getSortFiled()));
+        Sort sort = Sort.by(new Sort.Order(Sort.Direction.DESC, message.getSortFiled()));
         Query query = new Query(criteria).with(sort);
         long total = mongoTemplate.count(query, ChatMessageRecord.class, "chat_message");
         query.limit(message.getLimit()).skip((message.getPage() - 1) * message.getLimit());

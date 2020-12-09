@@ -51,11 +51,13 @@ public class AdminAdvertiseController extends BaseAdminController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.OTC, operation = "后台广告Advertise详情")
     public MessageResult detail(Long id) {
-        if (id == null)
+        if (id == null) {
             return error("id必传");
-        Advertise one = advertiseService.findById(id).get();
-        if (one == null)
+        }
+        Advertise one = (Advertise) advertiseService.findById(id);
+        if (one == null) {
             return error("没有此id的广告");
+        }
         return success(messageSource.getMessage("SUCCESS"), one);
     }
 
@@ -104,31 +106,40 @@ public class AdminAdvertiseController extends BaseAdminController {
         QAdvertise qEntity = QAdvertise.advertise;
         List<BooleanExpression> booleanExpressionList = new ArrayList();
         booleanExpressionList.add(qEntity.status.in(AdvertiseControlStatus.PUT_ON_SHELVES, AdvertiseControlStatus.PUT_OFF_SHELVES));
-        if (startTime != null)
+        if (startTime != null) {
             booleanExpressionList.add(qEntity.createTime.gt(startTime));
-        if (endTime != null)
+        }
+
+        if (endTime != null) {
             booleanExpressionList.add(qEntity.createTime.lt(endTime));
-        if (advertiseType != null)
+        }
+        if (advertiseType != null) {
             booleanExpressionList.add(qEntity.advertiseType.eq(advertiseType));
-        if (StringUtils.isNotBlank(realName))
+        }
+        if (StringUtils.isNotBlank(realName)) {
             booleanExpressionList.add(qEntity.member.realName.like("%" + realName + "%"));
+        }
         return booleanExpressionList;
     }
 
 
     private Predicate getPredicate(AdvertiseScreen screen) {
         ArrayList<BooleanExpression> booleanExpressions = new ArrayList<>();
-        if(screen.getStatus()!=null)
+        if(screen.getStatus()!=null) {
             booleanExpressions.add(QAdvertise.advertise.status.eq(screen.getStatus()));
-        if (screen.getAdvertiseType() != null)
+        }
+        if (screen.getAdvertiseType() != null) {
             booleanExpressions.add(QAdvertise.advertise.advertiseType.eq(screen.getAdvertiseType()));
-        if (StringUtils.isNotBlank(screen.getAccount()))
+        }
+        if (StringUtils.isNotBlank(screen.getAccount())) {
             booleanExpressions.add(QAdvertise.advertise.member.realName.like("%" + screen.getAccount() + "%")
                                     .or(QAdvertise.advertise.member.username.like("%" + screen.getAccount() + "%"))
                                     .or(QAdvertise.advertise.member.mobilePhone.like((screen.getAccount()+"%")))
                                     .or(QAdvertise.advertise.member.email.like((screen.getAccount()+"%"))));
-        if(screen.getPayModel()!=null)
+        }
+        if(screen.getPayModel()!=null) {
             booleanExpressions.add(QAdvertise.advertise.payMode.contains(screen.getPayModel()));
+        }
         return PredicateUtils.getPredicate(booleanExpressions);
     }
 

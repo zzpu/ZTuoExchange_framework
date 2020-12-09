@@ -27,6 +27,7 @@ public class AnnouncementService extends BaseService<Announcement> {
         return announcementDao.save(announcement);
     }
 
+    @Override
     public List<Announcement> findAll() {
         return announcementDao.findAll();
     }
@@ -36,7 +37,7 @@ public class AnnouncementService extends BaseService<Announcement> {
     }
 
     public void deleteById(Long id) {
-        announcementDao.delete(id);
+        announcementDao.deleteById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -29,8 +29,10 @@ public class MongoBaseService<T> {
      * @return
      */
     public Pagenation page(PageParam pageParam , Query query, Class<T> cla, String collectionName ){
-        if(pageParam.getOrders()!=null&&pageParam.getDirection()!=null)
-            query.with(new Sort(pageParam.getDirection(),pageParam.getOrders()));
+        if(pageParam.getOrders()!=null&&pageParam.getDirection()!=null){
+            query.with(Sort.by(pageParam.getDirection(),pageParam.getOrders().toString()));
+        }
+
         long total  = mongoTemplate.count(query,cla,collectionName);
         query.limit(pageParam.getPageSize()).skip((pageParam.getPageNo()-1)*pageParam.getPageSize());
         List<T> list = mongoTemplate.find(query,cla,collectionName);

@@ -65,6 +65,7 @@ public class SysAdvertiseService extends BaseService {
         return sysAdvertiseDao.save(sysAdvertise);
     }
 
+    @Override
     public List<SysAdvertise> findAll() {
         return sysAdvertiseDao.findAll();
     }

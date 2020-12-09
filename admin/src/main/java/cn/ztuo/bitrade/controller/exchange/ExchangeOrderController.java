@@ -75,7 +75,7 @@ public class ExchangeOrderController extends BaseAdminController {
     @AccessLog(module = AdminModule.EXCHANGE, operation = "exchangeOrder详情")
     public MessageResult detail(String id) {
         List<ExchangeOrderDetail> one = exchangeOrderService.getAggregation(id);
-        ExchangeOrder exchangeOrder = exchangeOrderService.findById(id).get();
+        ExchangeOrder exchangeOrder = (ExchangeOrder) exchangeOrderService.findById(id);
         if (one == null) {
             return error(messageSource.getMessage("NO_DATA"));
         }

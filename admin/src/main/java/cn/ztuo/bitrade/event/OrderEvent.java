@@ -35,9 +35,9 @@ public class OrderEvent {
     private RewardPromotionSettingService rewardPromotionSettingService;
 
     public void onOrderCompleted(Order order) {
-        Member member = memberDao.findOne(order.getMemberId());
+        Member member = memberDao.findById(order.getMemberId()).get();
         member.setTransactions(member.getTransactions() + 1);
-        Member member1 = memberDao.findOne(order.getCustomerId());
+        Member member1 = memberDao.findById(order.getCustomerId()).get();
         member1.setTransactions(member1.getTransactions() + 1);
         RewardPromotionSetting rewardPromotionSetting = rewardPromotionSettingService.findByType(PromotionRewardType.TRANSACTION);
         if (rewardPromotionSetting != null) {
@@ -45,7 +45,7 @@ public class OrderEvent {
             Arrays.stream(array).forEach(
                 x -> {
                     if (x.getTransactions() == 1 && x.getInviterId() != null) {
-                        Member member2 = memberDao.findOne(x.getInviterId());
+                        Member member2 = memberDao.findById(x.getInviterId()).get();
                         OtcWallet memberWallet1 = otcWalletService.findByCoinAndMember(member2.getId(),rewardPromotionSetting
                                 .getCoin());
                         BigDecimal amount1 = mulRound(order.getNumber(), getRate(JSONObject.parseObject(rewardPromotionSetting.getInfo()).getBigDecimal("one")));
@@ -59,7 +59,7 @@ public class OrderEvent {
                         rewardRecord1.setType(RewardRecordType.PROMOTION);
                         rewardRecordService.save(rewardRecord1);
                         if (member2.getInviterId() != null) {
-                            Member member3 = memberDao.findOne(member2.getInviterId());
+                            Member member3 = memberDao.findById(member2.getInviterId()).get();
                             OtcWallet memberWallet2 = otcWalletService.findByCoinAndMember(member3.getId(),rewardPromotionSetting
                                     .getCoin());
                             BigDecimal amount2 = mulRound(order.getNumber(), getRate(JSONObject.parseObject(rewardPromotionSetting.getInfo()).getBigDecimal("two")));

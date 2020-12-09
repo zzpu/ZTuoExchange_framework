@@ -70,8 +70,9 @@ public class MemberController extends BaseAdminController {
     @AccessLog(module = AdminModule.MEMBER, operation = "所有会员Member")
     public MessageResult all() {
         List<Member> all = memberService.findAll();
-        if (all != null && all.size() > 0)
+        if (all != null && all.size() > 0) {
             return success(all);
+        }
         return error(messageSource.getMessage("REQUEST_FAILED"));
     }
 
@@ -79,7 +80,7 @@ public class MemberController extends BaseAdminController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.MEMBER, operation = "会员Member详情")
     public MessageResult detail(@RequestParam("id") Long id) {
-        Member member = memberService.findById(id).get();
+        Member member = (Member) memberService.findById(id);
         notNull(member, "validate id!");
         List<MemberWallet> list = memberWalletService.findAllByMemberId(member.getId());
         MemberDTO memberDTO = new MemberDTO();
@@ -92,7 +93,7 @@ public class MemberController extends BaseAdminController {
     @PostMapping("delete")
     @AccessLog(module = AdminModule.MEMBER, operation = "删除会员Member")
     public MessageResult delete(@RequestParam(value = "id") Long id) {
-        Member member = memberService.findById(id).get();
+        Member member = (Member) memberService.findById(id);
         notNull(member, "validate id!");
         member.setStatus(CommonStatus.ILLEGAL);// 修改状态非法
         memberService.save(member);
@@ -142,7 +143,7 @@ public class MemberController extends BaseAdminController {
             @PathVariable("id") Long id,
             @RequestParam("status") CertifiedBusinessStatus status,
             @RequestParam("detail") String detail) {
-        Member member = memberService.findById(id).get();
+        Member member = (Member) memberService.findById(id);
         notNull(member, "validate id!");
         //确认是审核中
         isTrue(member.getCertifiedBusinessStatus() == AUDITING, "validate member certifiedBusinessStatus!");
@@ -226,7 +227,7 @@ public class MemberController extends BaseAdminController {
     public MessageResult cancelBusiness(
             @PathVariable("id") Long id,
             @RequestParam("status") CertifiedBusinessStatus status) {
-        Member member = memberService.findById(id).get();
+        Member member = memberService.findById(id);
         notNull(member, "validate id!");
         //确认是申请取消认证状态
         isTrue(member.getCertifiedBusinessStatus() == CANCEL_AUTH, "validate member certifiedBusinessStatus!");
@@ -277,7 +278,7 @@ public class MemberController extends BaseAdminController {
             return MessageResult.error("缺少参数");
         }
         isTrue(status == AUDITING || status == CANCEL_AUTH, "validate certifiedBusinessStatus!");
-        Member member = memberService.findById(id).get();
+        Member member = (Member) memberService.findById(id);
         notNull(member, "validate id!");
         //查询申请记录
         List<BusinessAuthApply> businessAuthApplyList = businessAuthApplyService.findByMemberAndCertifiedBusinessStatus(member, status);
@@ -290,10 +291,12 @@ public class MemberController extends BaseAdminController {
 
     private Predicate getPredicate(MemberScreen screen) {
         ArrayList<BooleanExpression> booleanExpressions = new ArrayList<>();
-        if (screen.getStatus() != null)
+        if (screen.getStatus() != null) {
             booleanExpressions.add(member.certifiedBusinessStatus.eq(screen.getStatus()));
-        if (screen.getStartTime() != null)
+        }
+        if (screen.getStartTime() != null) {
             booleanExpressions.add(member.registrationTime.goe(screen.getStartTime()));//大于等于开始时间
+        }
         if (screen.getEndTime() != null) {
             /*Calendar calendar = Calendar.getInstance();
             calendar.setTime(screen.getEndTime());
@@ -302,13 +305,15 @@ public class MemberController extends BaseAdminController {
             booleanExpressions.add(member.registrationTime.loe(screen.getEndTime()));//小于等于结束时间
         }
 
-        if (!StringUtils.isEmpty(screen.getAccount()))
+        if (!StringUtils.isEmpty(screen.getAccount())) {
             booleanExpressions.add(member.username.like("%" + screen.getAccount() + "%")
                     .or(member.mobilePhone.like(screen.getAccount() + "%"))
                     .or(member.email.like(screen.getAccount() + "%"))
                     .or(member.realName.like("%" + screen.getAccount() + "%")));
-        if (screen.getCommonStatus() != null)
+        }
+        if (screen.getCommonStatus() != null) {
             booleanExpressions.add(member.status.eq(screen.getCommonStatus()));
+        }
         return PredicateUtils.getPredicate(booleanExpressions);
     }
 
@@ -327,12 +332,14 @@ public class MemberController extends BaseAdminController {
     // 获得条件
     private List<BooleanExpression> getBooleanExpressionList(String account, CommonStatus status) {
         List<BooleanExpression> booleanExpressionList = new ArrayList();
-        if (status != null)
+        if (status != null) {
             booleanExpressionList.add(member.status.eq(status));
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(account))
+        }
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(account)) {
             booleanExpressionList.add(member.username.like("%" + account + "%")
                     .or(member.mobilePhone.like(account + "%"))
                     .or(member.email.like(account + "%")));
+        }
         return booleanExpressionList;
     }
 
@@ -343,8 +350,9 @@ public class MemberController extends BaseAdminController {
     public MessageResult publishAdvertise(@RequestParam("memberId") Long memberId,
                                           @RequestParam("status") BooleanEnum status) {
         Member member = memberService.findOne(memberId);
-        if (member.getCertifiedBusinessStatus() != CertifiedBusinessStatus.VERIFIED)
+        if (member.getCertifiedBusinessStatus() != CertifiedBusinessStatus.VERIFIED) {
             return error("请先认证商家");
+        }
         Assert.notNull(member, "玩家不存在");
         member.setPublishAdvertise(status);
         memberService.save(member);

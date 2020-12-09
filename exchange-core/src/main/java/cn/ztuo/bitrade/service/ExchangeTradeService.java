@@ -17,7 +17,7 @@ public class ExchangeTradeService {
 
     public List<ExchangeTrade> findLatest(String symbol,int size){
         Query query = new Query();
-        query.with(new Sort(Sort.Direction.DESC,"time"));
+        query.with(Sort.by(Sort.Direction.DESC,"time"));
         PageRequest page = PageRequest.of(0, size);
         query.with(page);
         return mongoTemplate.find(query,ExchangeTrade.class,"exchange_trade_"+symbol);

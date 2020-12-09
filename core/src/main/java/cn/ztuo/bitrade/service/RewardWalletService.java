@@ -57,6 +57,7 @@ public class RewardWalletService extends BaseService {
      * @param
      * @return
      */
+    @Override
     public List<RewardWallet> findAll(){
         return rewardWalletDao.findAll();
     }

@@ -18,6 +18,7 @@ public class MemberLevelService extends BaseService {
     @Autowired
     private MemberLevelDao memberLevelDao;
 
+    @Override
     public List<MemberLevel> findAll(){
         return memberLevelDao.findAll();
     }

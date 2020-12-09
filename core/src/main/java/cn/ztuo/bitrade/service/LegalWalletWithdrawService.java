@@ -39,7 +39,7 @@ public class LegalWalletWithdrawService extends TopBaseService<LegalWalletWithdr
     public LegalWalletWithdraw findDetailWeb(Long id, Long memberId) {
         BooleanExpression and = QLegalWalletWithdraw.legalWalletWithdraw.id.eq(id)
                 .and(QLegalWalletWithdraw.legalWalletWithdraw.member.id.eq(memberId));
-        return legalWalletWithdrawDao.findOne(and);
+        return legalWalletWithdrawDao.findOne(and).get();
     }
 
     //提现

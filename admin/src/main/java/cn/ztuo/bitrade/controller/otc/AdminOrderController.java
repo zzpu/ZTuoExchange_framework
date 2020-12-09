@@ -49,8 +49,9 @@ public class AdminOrderController extends BaseController {
     @AccessLog(module = AdminModule.OTC, operation = "所有法币交易订单Order")
     public MessageResult all() {
         List<Order> exchangeOrderList = orderService.findAll();
-        if (exchangeOrderList != null && exchangeOrderList.size() > 0)
+        if (exchangeOrderList != null && exchangeOrderList.size() > 0) {
             return success(exchangeOrderList);
+        }
         return error(messageSource.getMessage("NO_DATA"));
     }
 
@@ -58,9 +59,10 @@ public class AdminOrderController extends BaseController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.OTC, operation = "法币交易订单Order详情")
     public MessageResult detail(Long id) {
-        Order one = orderService.findById(id).get();
-        if (one == null)
+        Order one = (Order) orderService.findById(id);
+        if (one == null) {
             return error(messageSource.getMessage("NO_DATA"));
+        }
         return success(one);
     }
 
@@ -71,7 +73,7 @@ public class AdminOrderController extends BaseController {
     public MessageResult status(
             @PathVariable("id") Long id,
             @RequestParam("status") OrderStatus status) {
-        Order order = orderService.findById(id).get();
+        Order order = (Order) orderService.findById(id);
         notNull(order, "validate order.id!");
         order.setStatus(status);
         orderService.save(order);
@@ -94,31 +96,41 @@ public class AdminOrderController extends BaseController {
     private List<Predicate> getPredicates(OrderScreen screen) {
         ArrayList<Predicate> predicates = new ArrayList<>();
         //predicates.add(QOrder.order.status.ne(OrderStatus.CANCELLED));
-        if (StringUtils.isNotBlank(screen.getOrderSn()))
+        if (StringUtils.isNotBlank(screen.getOrderSn())) {
             predicates.add(QOrder.order.orderSn.eq(screen.getOrderSn()));
-        if (screen.getStartTime() != null)
+        }
+        if (screen.getStartTime() != null) {
             predicates.add(QOrder.order.createTime.goe(screen.getStartTime()));
+        }
         if (screen.getEndTime() != null){
             predicates.add(QOrder.order.createTime.lt(DateUtil.dateAddDay(screen.getEndTime(),1)));
         }
-        if (screen.getStatus() != null)
+        if (screen.getStatus() != null) {
             predicates.add(QOrder.order.status.eq(screen.getStatus()));
-        if (StringUtils.isNotEmpty(screen.getUnit()))
+        }
+        if (StringUtils.isNotEmpty(screen.getUnit())) {
             predicates.add(QOrder.order.coin.unit.equalsIgnoreCase(screen.getUnit()));
-        if (StringUtils.isNotBlank(screen.getMemberName()))
+        }
+        if (StringUtils.isNotBlank(screen.getMemberName())) {
             predicates.add(QOrder.order.memberName.like("%" + screen.getMemberName() + "%")
                                     .or(QOrder.order.memberRealName.like("%" + screen.getMemberName() + "%")));
-        if (StringUtils.isNotBlank(screen.getCustomerName()))
+        }
+        if (StringUtils.isNotBlank(screen.getCustomerName())) {
             predicates.add(QOrder.order.customerName.like("%" + screen.getCustomerName() + "%")
                                     .or(QOrder.order.customerRealName.like("%" + screen.getCustomerName() + "%")));
-        if(screen.getMinMoney()!=null)
+        }
+        if(screen.getMinMoney()!=null) {
             predicates.add(QOrder.order.money.goe(screen.getMinMoney()));
-        if(screen.getMaxMoney()!=null)
+        }
+        if(screen.getMaxMoney()!=null) {
             predicates.add(QOrder.order.money.loe(screen.getMaxMoney()));
-        if(screen.getMinNumber()!=null)
+        }
+        if(screen.getMinNumber()!=null) {
             predicates.add(QOrder.order.number.goe(screen.getMinNumber()));
-        if(screen.getMaxNumber()!=null)
+        }
+        if(screen.getMaxNumber()!=null) {
             predicates.add(QOrder.order.number.loe(screen.getMaxNumber()));
+        }
         if(screen.getAdvertiseType()!=null){
             predicates.add(QOrder.order.advertiseType.eq(screen.getAdvertiseType()));
         }

@@ -70,7 +70,7 @@ public class MemberTransactionController extends BaseAdminController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.FINANCE, operation = "交易记录MemberTransaction 详情")
     public MessageResult detail(@RequestParam(value = "id") Long id) {
-        MemberTransaction memberTransaction = memberTransactionService.findById(id).get();
+        MemberTransaction memberTransaction = (MemberTransaction)memberTransactionService.findById(id);
         notNull(memberTransaction, "validate id!");
         return success(memberTransaction);
     }

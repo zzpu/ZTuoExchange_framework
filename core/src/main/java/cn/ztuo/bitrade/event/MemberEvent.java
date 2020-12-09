@@ -63,7 +63,7 @@ public class MemberEvent {
                 member.setInviterId(member1.getId());
                 // 父级的父级
                 if(!StringUtils.isEmpty(member1.getInviterId())) {
-                    Member member2 = memberDao.findb(member1.getInviterId());
+                    Member member2 = memberDao.findAllByInviterId(member1.getInviterId()).get(0);
                     if (member2 != null) {
                         // 在注册用户存入父级的父级id
                         member.setInviterParentId(member2.getId());
@@ -108,7 +108,7 @@ public class MemberEvent {
             BigDecimal amount2 = JSONObject.parseObject(rewardPromotionSetting.getInfo()).getBigDecimal("two");
             //如果推荐奖励二级不为0
             if (amount2 != null && amount2.compareTo(BigDecimal.ZERO) > 0) {
-                Member member2 = memberDao.findOne(member1.getInviterId());
+                Member member2 = memberDao.findAllByInviterId(member1.getInviterId()).get(0);
                 if (needRealName == 0) {
                     promotionLevelTwo(rewardPromotionSetting, member2, member);
                 }
@@ -129,7 +129,7 @@ public class MemberEvent {
         two.setLevel(PromotionLevel.TWO);
         memberPromotionService.save(two);
         if (member2.getInviterId() != null) {
-            Member member3 = memberDao.findOne(member2.getInviterId());
+            Member member3 = memberDao.findAllByInviterId(member2.getInviterId()).get(0);
             member3.setThirdLevel(member3.getThirdLevel() + 1);
         }
     }

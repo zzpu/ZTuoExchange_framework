@@ -303,6 +303,7 @@ public class MemberWalletService extends BaseService {
         return memberWalletDao.decreaseBalance(memberWallet.getId(), amount);
     }
 
+    @Override
     public List<MemberWallet> findAll() {
         return memberWalletDao.findAll();
     }

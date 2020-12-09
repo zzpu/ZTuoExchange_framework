@@ -47,9 +47,9 @@ public class OrderEvent {
 
 
     public void onOrderCompleted(Order order) {
-        Member member = memberDao.findOne(order.getMemberId());
+        Member member = memberDao.findById(order.getMemberId()).get();
         member.setTransactions(member.getTransactions() + 1);
-        Member member1 = memberDao.findOne(order.getCustomerId());
+        Member member1 = memberDao.findById(order.getCustomerId()).get();
         member1.setTransactions(member1.getTransactions() + 1);
 
         //记录首次交易时间
@@ -112,7 +112,7 @@ public class OrderEvent {
      * @param order
      */
     private void reward(Member x,RewardPromotionSetting rewardPromotionSetting,Order order){
-        Member memberLevel1 = memberDao.findOne(x.getInviterId());
+        Member memberLevel1 = memberDao.findById(x.getInviterId()).get();
         OtcWallet memberWallet1 = otcWalletService.findByCoinAndMember(memberLevel1.getId(),rewardPromotionSetting
                 .getCoin());
         BigDecimal number = order.getNumber();
@@ -140,7 +140,7 @@ public class OrderEvent {
             rewardRecordService.save(rewardRecord1);
         }
         if (memberLevel1.getInviterId() != null) {
-            Member memberLevel2 = memberDao.findOne(memberLevel1.getInviterId());
+            Member memberLevel2 = memberDao.findById(memberLevel1.getInviterId()).get();
             OtcWallet memberWallet2 = otcWalletService.findByCoinAndMember(memberLevel2.getId(),
                     rewardPromotionSetting.getCoin());
             BigDecimal amount2 = mulRound(number, getRate(JSONObject.parseObject(rewardPromotionSetting.getInfo()).getBigDecimal("two")));

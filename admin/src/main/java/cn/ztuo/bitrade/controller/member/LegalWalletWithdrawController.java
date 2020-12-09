@@ -49,7 +49,7 @@ public class LegalWalletWithdrawController extends BaseAdminController {
 
     @GetMapping("{id}")
     public MessageResult detail(@PathVariable("id") Long id) {
-        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id).get();
+        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id);
         Assert.notNull(one, "validate id!");
         return success(one);
     }
@@ -59,7 +59,7 @@ public class LegalWalletWithdrawController extends BaseAdminController {
     @Transactional(rollbackFor = Exception.class)
     public MessageResult pass(@PathVariable("id") Long id) {
         // 校验数据
-        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id).get();
+        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id);
 
         MemberTransaction memberTransaction = new MemberTransaction() ;
         memberTransaction.setAmount(one.getAmount());
@@ -80,7 +80,7 @@ public class LegalWalletWithdrawController extends BaseAdminController {
     @PatchMapping("{id}/no-pass")
     public MessageResult noPass(@PathVariable("id") Long id) {
         //校验 提现
-        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id).get();
+        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id);
         Assert.notNull(one, "validate id!");
         Assert.isTrue(one.getStatus() == WithdrawStatus.PROCESSING, "审核已结束!");
         //校验钱包
@@ -97,7 +97,7 @@ public class LegalWalletWithdrawController extends BaseAdminController {
             @PathVariable("id") Long id,
             @RequestParam("paymentInstrument") String paymentInstrument) {
         //校验提现单
-        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id).get();
+        LegalWalletWithdraw one = legalWalletWithdrawService.findById(id);
         Assert.notNull(one, "validate id!");
         Assert.isTrue(one.getStatus() == WithdrawStatus.WAITING, "打款已结束!");
         //校验钱包

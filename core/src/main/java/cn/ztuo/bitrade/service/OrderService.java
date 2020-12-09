@@ -195,6 +195,7 @@ public class OrderService extends BaseService {
     }
 
 
+    @Override
     public List<Order> findAll() {
         return orderDao.findAll();
     }

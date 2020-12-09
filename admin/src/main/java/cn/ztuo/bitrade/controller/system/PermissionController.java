@@ -73,7 +73,7 @@ public class PermissionController extends BaseController {
     @PostMapping("/detail")
     @AccessLog(module = AdminModule.SYSTEM, operation = "权限详情")
     public MessageResult detail(@RequestParam(value = "id") Long id) {
-        SysPermission sysPermission = sysPermissionService.findById(id).get();
+        SysPermission sysPermission = (SysPermission) sysPermissionService.findById(id);
         Assert.notNull(sysPermission, "该权限不存在");
         return MessageResult.getSuccessInstance("查询权限成功", sysPermission);
     }

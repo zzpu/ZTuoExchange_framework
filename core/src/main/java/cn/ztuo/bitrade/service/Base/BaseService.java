@@ -1,5 +1,7 @@
 package cn.ztuo.bitrade.service.Base;
 
+import cn.ztuo.bitrade.dao.MemberDao;
+import cn.ztuo.bitrade.entity.Member;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.Expression;

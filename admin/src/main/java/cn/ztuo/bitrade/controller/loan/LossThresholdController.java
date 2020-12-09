@@ -49,7 +49,7 @@ public class LossThresholdController {
     @RequestMapping(value = "list",method = RequestMethod.POST)
     @AccessLog(module = AdminModule.MARGIN, operation = "查询所有的亏损阈值")
     public MessageResult listLossThreshold(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize")Integer pageSize,BooleanEnum booleanEnum){
-        Sort sort = new Sort(Sort.Direction.DESC,"id");
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
 
         PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize, sort);
         ArrayList<BooleanExpression> booleanExpressions = new ArrayList<>();

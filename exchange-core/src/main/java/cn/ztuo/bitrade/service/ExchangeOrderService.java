@@ -145,7 +145,7 @@ public class ExchangeOrderService extends BaseService {
      * @return
      */
     public Page<ExchangeOrder> findHistory(Long uid, String symbol, int pageNum, int pageSize,BooleanEnum marginTrade) {
-        Sort orders = new Sort(new Sort.Order(Sort.Direction.DESC, "time"));
+        Sort orders = Sort.by(new Sort.Order(Sort.Direction.DESC, "time"));
         PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize, orders);
         Criteria<ExchangeOrder> specification = new Criteria<ExchangeOrder>();
         specification.add(Restrictions.eq("symbol", symbol, true));
@@ -168,7 +168,7 @@ public class ExchangeOrderService extends BaseService {
      * @return
      */
     public Page<ExchangeOrder> findCurrent(Long uid, String symbol, int pageNo, int pageSize,BooleanEnum marginTrade) {
-        Sort orders = new Sort(new Sort.Order(Sort.Direction.DESC, "time"));
+        Sort orders = Sort.by(new Sort.Order(Sort.Direction.DESC, "time"));
         PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize, orders);
         Criteria<ExchangeOrder> specification = new Criteria<ExchangeOrder>();
         specification.add(Restrictions.eq("symbol", symbol, true));
@@ -745,7 +745,7 @@ public class ExchangeOrderService extends BaseService {
      * @return
      */
     public Page<ExchangeOrder> findPersonalHistory(Long uid, String symbol, ExchangeOrderType type, ExchangeOrderStatus status, String startTime, String endTime, ExchangeOrderDirection direction, int pageNo, int pageSize) {
-        Sort orders = new Sort(new Sort.Order(Sort.Direction.DESC, "time"));
+        Sort orders = Sort.by(new Sort.Order(Sort.Direction.DESC, "time"));
         PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize, orders);
         Criteria<ExchangeOrder> specification = new Criteria<ExchangeOrder>();
         if(StringUtils.isNotEmpty(symbol)){
@@ -791,7 +791,7 @@ public class ExchangeOrderService extends BaseService {
      * @return
      */
     public Page<ExchangeOrder> findPersonalCurrent(Long uid, String symbol, ExchangeOrderType type, String startTime, String endTime, ExchangeOrderDirection direction, int pageNo, int pageSize) {
-        Sort orders = new Sort(new Sort.Order(Sort.Direction.DESC, "time"));
+        Sort orders = Sort.by(new Sort.Order(Sort.Direction.DESC, "time"));
         PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize, orders);
         Criteria<ExchangeOrder> specification = new Criteria<ExchangeOrder>();
         if(StringUtils.isNotEmpty(symbol)){

@@ -63,7 +63,7 @@ public class EmptionRecordService extends BaseService{
 
         }
         Predicate predicate = PredicateUtils.getPredicate(booleanExpressions);
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(emptionRecrodVO.getPageNum() - 1, emptionRecrodVO.getPageSize(), sort);
         return emptionRecordDao.findAll(predicate,pageable);
 

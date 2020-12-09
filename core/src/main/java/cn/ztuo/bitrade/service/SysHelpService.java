@@ -51,7 +51,7 @@ public class SysHelpService extends BaseService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(Long[] ids) {
         for (Long id : ids) {
-            sysHelpDao.delete(id);
+            sysHelpDao.deleteById(id);
         }
     }
 
@@ -96,7 +96,7 @@ public class SysHelpService extends BaseService {
      * @return
      */
     public Page<SysHelp> findByCondition(int pageNo,int pageSize,SysHelpClassification cate){
-        Sort sort = new Sort(new Sort.Order(Sort.Direction.DESC, "sort"));
+        Sort sort = Sort.by(new Sort.Order(Sort.Direction.DESC, "sort"));
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         Specification specification = new Specification() {
             List<javax.persistence.criteria.Predicate> predicates = new ArrayList<>();

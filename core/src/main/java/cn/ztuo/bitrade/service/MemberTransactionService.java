@@ -75,6 +75,7 @@ public class MemberTransactionService extends BaseService {
         return transactionDao.saveAndFlush(transaction);
     }
 
+    @Override
     public List<MemberTransaction> findAll() {
         return transactionDao.findAll();
     }

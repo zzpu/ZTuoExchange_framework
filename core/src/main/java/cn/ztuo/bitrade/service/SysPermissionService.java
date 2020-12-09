@@ -31,6 +31,7 @@ public class SysPermissionService extends BaseService<SysPermission> {
         return sysPermissionDao.findById(id).get();
     }
 
+    @Override
     public List<SysPermission> findAll() {
         return sysPermissionDao.findAll();
     }
@@ -39,11 +40,12 @@ public class SysPermissionService extends BaseService<SysPermission> {
         return sysPermissionDao.save(sysPermission);
     }
 
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void deletes(Long[] ids) {
         for (long id : ids) {
             sysPermissionDao.deletePermission(id);
-            sysPermissionDao.delete(id);
+            sysPermissionDao.deleteById(id);
         }
     }
 

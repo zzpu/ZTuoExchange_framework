@@ -76,6 +76,7 @@ public class CoinService extends BaseService {
         return coinDao.save(coin);
     }
 
+    @Override
     public List<Coin> findAll() {
         return coinDao.findAllOrderBySort();
     }
@@ -104,7 +105,7 @@ public class CoinService extends BaseService {
     }
 
     public void deleteOne(String name) {
-        coinDao.delete(name);
+        coinDao.deleteById(name);
     }
 
     /**

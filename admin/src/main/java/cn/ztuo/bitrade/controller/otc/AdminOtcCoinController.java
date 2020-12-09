@@ -54,11 +54,13 @@ public class AdminOtcCoinController extends BaseAdminController {
             return MessageResult.error(messageSource.getMessage("PRE_COIN_EXIST"));
         }
         MessageResult result = BindingResultUtil.validate(bindingResult);
-        if (result != null)
+        if (result != null) {
             return result;
+        }
         Coin coin = coinService.findByUnit(otcCoin.getUnit());
-        if(coin==null)
+        if(coin==null) {
             return error(messageSource.getMessage("COIN_NOT_SUPPORTED"));
+        }
         otcCoinService.save(otcCoin);
         return success();
     }
@@ -68,8 +70,9 @@ public class AdminOtcCoinController extends BaseAdminController {
     @AccessLog(module = AdminModule.OTC, operation = "所有otc币种otcCoin")
     public MessageResult all() {
         List<OtcCoin> all = otcCoinService.findAll();
-        if (all != null && all.size() > 0)
+        if (all != null && all.size() > 0) {
             return success(all);
+        }
         return error(messageSource.getMessage("NO_DATA"));
     }
 
@@ -77,7 +80,7 @@ public class AdminOtcCoinController extends BaseAdminController {
     @PostMapping("detail")
     @AccessLog(module = AdminModule.OTC, operation = "otc币种otcCoin详情")
     public MessageResult detail(@RequestParam("id") Long id) {
-        OtcCoin one = otcCoinService.findById(id).get();
+        OtcCoin one = (OtcCoin)otcCoinService.findById(id);
         notNull(one, "validate otcCoin.id!");
         return success(one);
     }
@@ -88,8 +91,10 @@ public class AdminOtcCoinController extends BaseAdminController {
     public MessageResult update(@Valid OtcCoin otcCoin, BindingResult bindingResult) {
         notNull(otcCoin.getId(), "validate otcCoin.id!");
         MessageResult result = BindingResultUtil.validate(bindingResult);
-        if (result != null)
+        if (result != null){
             return result;
+        }
+
         OtcCoin one = otcCoinService.findOne(otcCoin.getId());
         notNull(one, "validate otcCoin.id!");
         otcCoinService.save(otcCoin);
@@ -111,7 +116,7 @@ public class AdminOtcCoinController extends BaseAdminController {
     public MessageResult memberStatistics(
             @RequestParam("id") Long id,
             @RequestParam("jyRate") BigDecimal jyRate) {
-        OtcCoin one = otcCoinService.findById(id).get();
+        OtcCoin one = (OtcCoin) otcCoinService.findById(id);
         notNull(one, "validate otcCoin.id");
         one.setJyRate(jyRate);
         otcCoinService.save(one);

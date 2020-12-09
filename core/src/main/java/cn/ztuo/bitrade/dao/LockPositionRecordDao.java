@@ -10,9 +10,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface LockPositionRecordDao extends BaseDao<LockPositionRecord> {
-    LockPositionRecord findById(Long id);
+    Optional<LockPositionRecord> findById(Long id);
 
     @Query("select l from LockPositionRecord l where l.status= :status and l.unlockTime < :unlockTime")
     List<LockPositionRecord> findByStatusAndUnlockTime(@Param("status") CommonStatus status, @Param("unlockTime") Date unlockTime);

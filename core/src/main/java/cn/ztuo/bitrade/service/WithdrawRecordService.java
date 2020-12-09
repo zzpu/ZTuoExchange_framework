@@ -55,6 +55,7 @@ public class WithdrawRecordService extends BaseService {
         return withdrawApplyDao.save(withdrawApply);
     }
 
+    @Override
     public List<WithdrawRecord> findAll() {
         return withdrawApplyDao.findAll();
     }

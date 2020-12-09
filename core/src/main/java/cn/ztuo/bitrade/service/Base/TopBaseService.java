@@ -99,7 +99,8 @@ public class TopBaseService<E, D extends BaseDao> {
      * @return
      */
     public Pagenation<E> pageQuery(Pagenation pagenation, Predicate predicate) {
-        Sort sort = new Sort(pagenation.getPageParam().getDirection(), pagenation.getPageParam().getOrders());
+        // FIXME
+        Sort sort =  Sort.by(pagenation.getPageParam().getDirection(), pagenation.getPageParam().getOrders().toString());
         Pageable pageable = PageRequest.of(pagenation.getPageParam().getPageNo() - 1, pagenation.getPageParam().getPageSize(), sort);
         Page<E> page = dao.findAll(predicate, pageable);
         return pagenation.setData(page.getContent(), page.getTotalElements(), page.getTotalPages());

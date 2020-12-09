@@ -32,7 +32,7 @@ public class ExchangeCoinService {
             return null;
         };
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "sort");
-        Sort sort = new Sort(order);
+        Sort sort = Sort.by(order);
         return coinRepository.findAll(spec, sort);
     }
 
@@ -50,7 +50,7 @@ public class ExchangeCoinService {
             return null;
         };
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "sort");
-        Sort sort = new Sort(order);
+        Sort sort = Sort.by(order);
         return coinRepository.findAll(spec, sort);
     }
 
@@ -61,7 +61,7 @@ public class ExchangeCoinService {
     @Transactional(rollbackFor = Exception.class)
     public void deletes(String[] ids) {
         for (String id : ids) {
-            coinRepository.delete(id);
+            coinRepository.deleteById(id);
         }
     }
 

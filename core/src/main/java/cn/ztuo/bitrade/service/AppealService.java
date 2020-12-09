@@ -100,8 +100,8 @@ public class AppealService extends BaseService {
      * @return
      */
     private AppealVO generateAppealVO(Appeal appeal){
-        Member initialMember = memberDao.findOne(appeal.getInitiatorId());
-        Member associateMember = memberDao.findOne(appeal.getAssociateId());
+        Member initialMember = memberDao.findById(appeal.getInitiatorId()).get();
+        Member associateMember = memberDao.findById(appeal.getAssociateId()).get();
         AppealVO vo = new AppealVO();
         vo.setAppealId(BigInteger.valueOf(appeal.getId()));
         vo.setAssociateName(associateMember.getRealName());

@@ -122,6 +122,7 @@ public class MemberService extends BaseService {
      * @description 查询所有会员
      * @date 2017/12/25 18:43
      */
+    @Override
     public List<Member> findAll() {
         return memberDao.findAll();
     }
