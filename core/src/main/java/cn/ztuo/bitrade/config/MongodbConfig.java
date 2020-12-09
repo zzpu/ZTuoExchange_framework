@@ -37,14 +37,10 @@ public class MongodbConfig extends AbstractMongoConfiguration {
         return  this.getMongoClientURI().getDatabase();
     }
 
-    public Mongo mongo() throws Exception {
-        MongoClient mongoClient = new MongoClient(this.getMongoClientURI());
-        return mongoClient;
-    }
 
     @Bean
     public MongoDbFactory dbFactory() throws Exception {
-        return new SimpleMongoDbFactory((MongoClient) this.mongo(),this.getDatabaseName());
+        return new SimpleMongoDbFactory(this.mongoClient(), this.getDatabaseName());
     }
 
     @Override
@@ -73,6 +69,7 @@ public class MongodbConfig extends AbstractMongoConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        return null;
+        MongoClient mongoClient = new MongoClient(this.getMongoClientURI());
+        return mongoClient;
     }
 }

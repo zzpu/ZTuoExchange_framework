@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface ReleaseBalanceDao extends BaseDao<ReleaseBalance> {
 
-
-    /**
-     * 审核送币
-     */
-    ReleaseBalance findOne(Long memberId);
+//
+//    /**
+//     * 审核送币
+//     */
+//    ReleaseBalance findOne(Long memberId);
 }

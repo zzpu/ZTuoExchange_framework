@@ -48,7 +48,7 @@ public class ReleaseBalanceService extends BaseService {
         List<Long> id = releaseBalanceVO.getId();
         ReleaseBalance releaseBalance;
         for (int i = 0; i < id.size(); i++) {
-            releaseBalance = releaseBalanceDao.findOne(id.get(i));
+            releaseBalance = releaseBalanceDao.findById(id.get(i)).get();
             if (!"1".equals(releaseBalance.getReleaseState())) {
                 String coinId = releaseBalance.getCoinUnit();
                 Long memberId = releaseBalance.getMemberId();
