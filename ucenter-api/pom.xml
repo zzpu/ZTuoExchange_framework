@@ -64,10 +64,23 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.session</groupId>-->
+<!--			<artifactId>spring-session</artifactId>-->
+<!--			<version>1.3.1.RELEASE</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session</artifactId>
-			<version>1.3.1.RELEASE</version>
+			<artifactId>spring-session-core</artifactId>
+		</dependency>
+		<!--SpringSessionRedis依赖-->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>cn.ztuo.bitrade</groupId>

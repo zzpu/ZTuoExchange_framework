@@ -14,14 +14,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author GuoShuai
  * @date 2018年02月06日
  */
 @Configuration
-public class ApplicationConfig  extends WebMvcConfigurerAdapter {
+public class ApplicationConfig implements WebMvcConfigurer {
 
 
     /**
@@ -49,13 +49,13 @@ public class ApplicationConfig  extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/asset/**").addResourceLocations("classpath:/asset/");
-        super.addResourceHandlers(registry);
+
     }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverterFactory(new OrdinalToEnumConverterFactory());
-        super.addFormatters(registry);
+
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ApplicationConfig  extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/register/**", "/mobile/code","/login","/check/login","/start/captcha","/support/country",
                         "/ancillary/**","/announcement/**","/mobile/reset/code","/reset/email/code",
                         "/reset/login/password","/vote/info","/coin/supported","/get/user","/ieo/all");
-        super.addInterceptors(registry);
+
     }
 
     @Bean
