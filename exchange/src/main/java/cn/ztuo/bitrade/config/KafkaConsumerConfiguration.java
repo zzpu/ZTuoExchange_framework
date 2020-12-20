@@ -14,7 +14,7 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
-
+//这里创建了对应类型的bean之后，org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration中的对应Bean定义将不起作用。
 @Configuration
 @EnableKafka
 public class KafkaConsumerConfiguration {
@@ -35,7 +35,7 @@ public class KafkaConsumerConfiguration {
 	private int concurrency;
 	@Value("${spring.kafka.consumer.maxPollRecordsConfig}")
 	private int maxPollRecordsConfig;
-
+	//构造消费者属性map，ConsumerConfig中的可配置属性比spring boot自动配置要多
 	public Map<String, Object> consumerConfigs() {
 		Map<String, Object> propsMap = new HashMap<>();
 		propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
@@ -49,7 +49,10 @@ public class KafkaConsumerConfiguration {
 		propsMap.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecordsConfig);// 每个批次获取数
 		return propsMap;
 	}
-
+	/**
+	 * 不使用spring boot默认方式创建的DefaultKafkaConsumerFactory，重新定义创建方式
+	 * @return
+	 */
 	public ConsumerFactory<String, String> consumerFactory() {
 		return new DefaultKafkaConsumerFactory<>(consumerConfigs());
 	}

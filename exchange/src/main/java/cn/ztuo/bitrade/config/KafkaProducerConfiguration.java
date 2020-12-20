@@ -27,7 +27,7 @@ public class KafkaProducerConfiguration {
 	private int linger;
 	@Value("${spring.kafka.producer.buffer.memory}")
 	private int bufferMemory;
-
+	// 创建生产者配置map，ProducerConfig中的可配置属性比spring boot自动配置要多
 	public Map<String, Object> producerConfigs() {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
@@ -41,10 +41,17 @@ public class KafkaProducerConfiguration {
 		return props;
 	}
 
+	/**
+	 * 不使用spring boot的KafkaAutoConfiguration默认方式创建的DefaultKafkaProducerFactory，重新定义
+	 * @return
+	 */
 	public ProducerFactory<String, String> producerFactory() {
 		return new DefaultKafkaProducerFactory<>(producerConfigs());
 	}
-
+	/**
+	 * 不使用spring boot的KafkaAutoConfiguration默认方式创建的KafkaTemplate，重新定义
+	 * @return
+	 */
 	@Bean
 	public KafkaTemplate<String, String> kafkaTemplate() {
 		return new KafkaTemplate<String, String>(producerFactory());
