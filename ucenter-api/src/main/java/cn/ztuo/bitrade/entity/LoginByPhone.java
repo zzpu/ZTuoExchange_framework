@@ -41,10 +41,10 @@ public class LoginByPhone {
     @NotBlank(message = "{LoginByPhone.code.null}")
     private String code;
 
-    @NotBlank(message = "{LoginByPhone.ticket.null}")
+//    @NotBlank(message = "{LoginByPhone.ticket.null}")
     private String ticket;
 
-    @NotBlank(message = "{LoginByPhone.randStr.null}")
+//    @NotBlank(message = "{LoginByPhone.randStr.null}")
     private String randStr;
 
     private String promotion;

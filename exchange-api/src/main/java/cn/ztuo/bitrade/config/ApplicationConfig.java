@@ -11,13 +11,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 /**
  * @author Administrator
  */
 @Configuration
-public class ApplicationConfig extends WebMvcConfigurerAdapter {
+public class ApplicationConfig implements WebMvcConfigurer {
+
     @Bean
     public FilterRegistrationBean corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -36,15 +38,14 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverterFactory(new OrdinalToEnumConverterFactory());
-        super.addFormatters(registry);
+
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MemberInterceptor())
+        registry.addInterceptor(new MemberInterceptor()).addPathPatterns("/**")
                 .addPathPatterns("/order/**", "/favor/**")
                 .excludePathPatterns("/register/**");
-        super.addInterceptors(registry);
     }
 
     /**
