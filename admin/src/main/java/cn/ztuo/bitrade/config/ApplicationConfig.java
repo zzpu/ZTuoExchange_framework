@@ -14,13 +14,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author Administrator
  */
 @Configuration
-public class ApplicationConfig extends WebMvcConfigurerAdapter {
+public class ApplicationConfig implements WebMvcConfigurer {
 
     /**
      * 国际化
@@ -52,13 +52,13 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/asset/**").addResourceLocations("classpath:/asset/");
-        super.addResourceHandlers(registry);
+
     }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverterFactory(new OrdinalToEnumConverterFactory());
-        super.addFormatters(registry);
+
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -67,7 +67,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
                         "/system/employee/check","/system/employee/logout","/finance/manually/**");
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new OutExcelInterceptor()).addPathPatterns("/**/out-excel");
-        super.addInterceptors(registry);
     }
 
 }
