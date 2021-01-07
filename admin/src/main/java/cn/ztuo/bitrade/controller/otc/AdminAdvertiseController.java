@@ -1,6 +1,7 @@
 package cn.ztuo.bitrade.controller.otc;
 
 import cn.ztuo.bitrade.controller.common.BaseAdminController;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import cn.ztuo.bitrade.annotation.AccessLog;
@@ -82,6 +83,9 @@ public class AdminAdvertiseController extends BaseAdminController {
     @AccessLog(module = AdminModule.OTC, operation = "分页查找后台广告Advertise")
     public MessageResult page(PageModel pageModel, AdvertiseScreen screen) {
         Predicate predicate = getPredicate(screen);
+        if(predicate == null){
+            predicate = new BooleanBuilder();
+        }
         Page<Advertise> all = advertiseService.findAll(predicate, pageModel.getPageable());
         return success(all);
     }

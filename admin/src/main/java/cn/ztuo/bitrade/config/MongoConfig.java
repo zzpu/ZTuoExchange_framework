@@ -33,24 +33,22 @@ public class MongoConfig extends AbstractMongoConfiguration{
         return getMongoClientURI().getDatabase();
     }
 
-    @Override
-    public Mongo mongo() {
-        MongoClient mongoClient = new MongoClient(this.getMongoClientURI());
-        return mongoClient;
-    }
 
     public MongoClientURI getMongoClientURI(){
         return new MongoClientURI(uri);
     }
 
+    @Override
     @Bean
     public MappingMongoConverter mappingMongoConverter() throws Exception {
         DefaultDbRefResolver dbRefResolver = new DefaultDbRefResolver(this.dbFactory());
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, this.mongoMappingContext());
         List<Object> list = new ArrayList<>();
-        list.add(new BigDecimalToDecimal128Converter());//自定义的类型转换器
-        list.add(new Decimal128ToBigDecimalConverter());//自定义的类型转换器
-        //list.add(new DateLocalConvert());
+        //自定义的类型转换器
+        list.add(new BigDecimalToDecimal128Converter());
+        //自定义的类型转换器
+        list.add(new Decimal128ToBigDecimalConverter());
+        // list.add(new DateLocalConvert());
         converter.setCustomConversions(new CustomConversions(list));
         return converter;
     }
@@ -58,11 +56,20 @@ public class MongoConfig extends AbstractMongoConfiguration{
     public MongoDbFactory dbFactory() throws Exception {
         return new SimpleMongoDbFactory(getMongoClientURI());
     }
+    @Override
     @Bean
     public MongoMappingContext mongoMappingContext() {
         MongoMappingContext mappingContext = new MongoMappingContext();
         return mappingContext;
     }
+
+    @Override
+    public MongoClient mongoClient() {
+        MongoClient mongoClient = new MongoClient(this.getMongoClientURI());
+        return mongoClient;
+    }
+
+    @Override
     @Bean(name="newMongoTemplate")
     public MongoTemplate mongoTemplate() throws Exception {
         return new MongoTemplate(this.dbFactory(), this.mappingMongoConverter());

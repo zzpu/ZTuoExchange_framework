@@ -3,6 +3,7 @@ package cn.ztuo.bitrade.controller.cms;
 import cn.ztuo.bitrade.controller.common.BaseAdminController;
 import cn.ztuo.bitrade.model.screen.SysAdvertiseScreen;
 import cn.ztuo.bitrade.util.*;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import cn.ztuo.bitrade.annotation.AccessLog;
@@ -122,6 +123,9 @@ public class AdvertiseController extends BaseAdminController {
             directions.add(Sort.Direction.DESC);
             pageModel.setProperty(list);
             pageModel.setDirection(directions);
+        }
+        if(predicate == null){
+            predicate = new BooleanBuilder();
         }
         Page<SysAdvertise> all = sysAdvertiseService.findAll(predicate, pageModel.getPageable());
         return success(all);

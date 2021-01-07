@@ -1,6 +1,7 @@
 package cn.ztuo.bitrade.controller.system;
 
 import com.mysema.commons.lang.Assert;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import cn.ztuo.bitrade.annotation.AccessLog;
 import cn.ztuo.bitrade.constant.AdminModule;
@@ -64,7 +65,10 @@ public class PermissionController extends BaseController {
             if ((parentId+"").equals("0")){
                 pageModel.setPageSize(100);
             }
+        }else{
+            predicate = QSysPermission.sysPermission.id.gt(0);
         }
+
         Page<SysPermission> all = sysPermissionService.findAll(predicate, pageModel.getPageable());
         return success(all);
     }

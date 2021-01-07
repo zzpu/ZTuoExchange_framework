@@ -299,7 +299,8 @@ INSERT INTO `admin_permission`(`id`, `title`, `name`, `parent_id`, `sort`, `desc
 INSERT INTO `admin_permission`(`id`, `title`, `name`, `parent_id`, `sort`, `description`) VALUES (236, '解锁钱包', 'member:otc-wallet:unlock-wallet', 11, 0, '解锁法币钱包');
 INSERT INTO `admin_permission`(`id`, `title`, `name`, `parent_id`, `sort`, `description`) VALUES (237, '查询所有法币账户', 'member:otc-wallet:closeBalance', 11, 0, '查询用户法币账户');
 INSERT INTO `admin_permission`(`id`, `title`, `name`, `parent_id`, `sort`, `description`) VALUES (238, '修改交易对', 'exchange:exchange-coin:alter-rate', 60, 0, '修改交易对');
-
+INSERT INTO `admin_permission`(`id`, `title`, `name`, `parent_id`, `sort`, `description`) VALUES (239, '查询用户余额', 'member:member-wallet:balance', 11, 0, '查询用户余额');
+INSERT INTO `admin_permission`(`id`, `title`, `name`, `parent_id`, `sort`, `description`) VALUES (240, '查询列表信息', 'exchange:init-plate:query', 60, 0, '查询列表信息');
 -- ----------------------------
 -- Table structure for admin_role
 -- ----------------------------

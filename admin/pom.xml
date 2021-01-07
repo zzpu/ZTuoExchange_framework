@@ -53,25 +53,25 @@
        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-data-mongodb</artifactId>
-                    <groupId>org.springframework.data</groupId>
-                </exclusion>
-            </exclusions>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>spring-data-mongodb</artifactId>-->
+<!--                    <groupId>org.springframework.data</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
         </dependency>
-        <dependency>
-            <artifactId>spring-data-mongodb</artifactId>
-            <groupId>org.springframework.data</groupId>
-            <version>1.10.10.RELEASE</version>
-            <!--排除autoConfig-->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mongodb</groupId>
-                    <artifactId>mongo-java-driver</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <artifactId>spring-data-mongodb</artifactId>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <version>1.10.10.RELEASE</version>-->
+<!--            &lt;!&ndash;排除autoConfig&ndash;&gt;-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.mongodb</groupId>-->
+<!--                    <artifactId>mongo-java-driver</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

@@ -12,6 +12,7 @@ import cn.ztuo.bitrade.service.SysRoleService;
 import cn.ztuo.bitrade.util.BindingResultUtil;
 import cn.ztuo.bitrade.util.MessageResult;
 import cn.ztuo.bitrade.controller.common.BaseAdminController;
+import com.querydsl.core.BooleanBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -129,7 +130,7 @@ public class RoleController extends BaseAdminController {
     @RequestMapping("all")
     @AccessLog(module = AdminModule.SYSTEM, operation = "所有角色SysRole")
     public MessageResult getAllRole(PageModel pageModel) {
-        Page<SysRole> all = sysRoleService.findAll(null, pageModel.getPageable());
+        Page<SysRole> all = sysRoleService.findAll(new BooleanBuilder(), pageModel.getPageable());
         return success(all);
     }
 

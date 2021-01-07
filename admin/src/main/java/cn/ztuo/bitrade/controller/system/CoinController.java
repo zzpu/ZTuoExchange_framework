@@ -3,6 +3,7 @@ package cn.ztuo.bitrade.controller.system;
 import cn.ztuo.bitrade.controller.common.BaseAdminController;
 import cn.ztuo.bitrade.model.update.CoinUpdate;
 import cn.ztuo.bitrade.util.*;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import cn.ztuo.bitrade.annotation.AccessLog;
 import cn.ztuo.bitrade.constant.*;
@@ -176,7 +177,7 @@ public class CoinController extends BaseAdminController {
             pageModel.setProperty(list);
             pageModel.setDirection(directions);
         }
-        Page<Coin> pageResult = coinService.findAll(null, pageModel.getPageable());
+        Page<Coin> pageResult = coinService.findAll(new BooleanBuilder(), pageModel.getPageable());
         for (Coin coin : pageResult.getContent()) {
             coin.setAllBalance(memberWalletService.getAllBalance(coin.getName()));
             if (coin.getEnableRpc() == BooleanEnum.IS_TRUE) {

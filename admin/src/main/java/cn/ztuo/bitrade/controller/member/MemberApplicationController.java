@@ -1,5 +1,6 @@
 package cn.ztuo.bitrade.controller.member;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import cn.ztuo.bitrade.annotation.AccessLog;
@@ -89,6 +90,9 @@ public class MemberApplicationController extends BaseAdminController {
             booleanExpressions.add(memberApplication.updateTime.loe(screen.getAuditEndTime()));
         }
         Predicate predicate = PredicateUtils.getPredicate(booleanExpressions);
+        if(predicate == null){
+            predicate =  new BooleanBuilder();
+        }
         Page<MemberApplication> all = memberApplicationService.findAll(predicate, pageModel.getPageable());
         return success(all);
     }

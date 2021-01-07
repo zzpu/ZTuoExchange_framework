@@ -48,8 +48,10 @@ public class PageModel {
 
     public Pageable getPageable() {
         Sort sort = getSort();
-        if (sort == null)
+        if (sort == null){
             return PageRequest.of(pageNo - 1, pageSize);
+        }
+
         return PageRequest.of(pageNo - 1, pageSize, sort);
     }
 

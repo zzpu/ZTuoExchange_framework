@@ -1,5 +1,6 @@
 package cn.ztuo.bitrade.controller.businessAuth;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import cn.ztuo.bitrade.constant.CertifiedBusinessStatus;
@@ -48,6 +49,10 @@ public class BusinessAuthController extends BaseAdminController {
             booleanExpressions.add(businessAuthDeposit.status.eq(status));
         }
         Predicate predicate = PredicateUtils.getPredicate(booleanExpressions);
+        if(predicate == null){
+            predicate =  new BooleanBuilder();
+        }
+
         Page<BusinessAuthDeposit> depositPage = businessAuthDepositService.findAll(predicate, pageModel);
         MessageResult result = MessageResult.success();
         result.setData(depositPage);

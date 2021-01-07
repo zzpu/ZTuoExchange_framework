@@ -12,6 +12,7 @@ import cn.ztuo.bitrade.service.OtcCoinService;
 import cn.ztuo.bitrade.util.BindingResultUtil;
 import cn.ztuo.bitrade.util.FileUtil;
 import cn.ztuo.bitrade.util.MessageResult;
+import com.querydsl.core.BooleanBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -127,7 +128,8 @@ public class AdminOtcCoinController extends BaseAdminController {
     @PostMapping("page-query")
     @AccessLog(module = AdminModule.OTC, operation = "分页查找otc币种otcCoin")
     public MessageResult pageQuery(PageModel pageModel) {
-        Page<OtcCoin> pageResult = otcCoinService.findAll(null, pageModel.getPageable());
+        BooleanBuilder builder = new BooleanBuilder();
+        Page<OtcCoin> pageResult = otcCoinService.findAll(builder, pageModel.getPageable());
         return success(pageResult);
     }
 

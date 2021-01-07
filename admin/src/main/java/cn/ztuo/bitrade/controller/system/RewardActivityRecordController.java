@@ -55,6 +55,8 @@ public class RewardActivityRecordController extends BaseAdminController {
         BooleanExpression predicate = null;
         if (type != null) {
             predicate = QRewardActivitySetting.rewardActivitySetting.type.eq(type);
+        }else{
+            predicate = QRewardActivitySetting.rewardActivitySetting.id.gt(0);
         }
         Page<RewardActivitySetting> all = rewardActivitySettingService.findAll(predicate, pageModel);
         return success(all);

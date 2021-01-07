@@ -2,6 +2,7 @@ package cn.ztuo.bitrade.controller.member;
 
 import cn.ztuo.bitrade.controller.common.BaseAdminController;
 import cn.ztuo.bitrade.model.screen.MemberScreen;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import cn.ztuo.bitrade.annotation.AccessLog;
@@ -216,6 +217,9 @@ public class MemberController extends BaseAdminController {
             PageModel pageModel,
             MemberScreen screen) {
         Predicate predicate = getPredicate(screen);
+        if(predicate == null){
+           predicate =  new BooleanBuilder();
+        }
         Page<Member> all = memberService.findAll(predicate, pageModel.getPageable());
         return success(all);
     }

@@ -8,6 +8,7 @@ import cn.ztuo.bitrade.model.update.DataDictionaryUpdate;
 import cn.ztuo.bitrade.service.DataDictionaryService;
 import cn.ztuo.bitrade.util.BindingResultUtil;
 import cn.ztuo.bitrade.util.MessageResult;
+import com.querydsl.core.BooleanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.util.Assert;
@@ -44,7 +45,8 @@ public class DataDictionaryController extends BaseAdminController {
 
     @GetMapping
     public MessageResult page(PageModel pageModel) {
-        Page<DataDictionary> all = service.findAll(null, pageModel);
+
+        Page<DataDictionary> all = service.findAll(new BooleanBuilder(), pageModel);
         return success(all);
     }
 

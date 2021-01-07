@@ -14,6 +14,7 @@ import cn.ztuo.bitrade.service.ExchangeCoinService;
 import cn.ztuo.bitrade.service.LocaleMessageSourceService;
 import cn.ztuo.bitrade.util.FileUtil;
 import cn.ztuo.bitrade.util.MessageResult;
+import com.querydsl.core.BooleanBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.util.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +94,7 @@ public class ExchangeCoinController extends BaseAdminController {
             pageModel.setProperty(list);
             pageModel.setDirection(directions);
         }
-        Page<ExchangeCoin> all = exchangeCoinService.findAll(null, pageModel.getPageable());
+        Page<ExchangeCoin> all = exchangeCoinService.findAll(new BooleanBuilder(), pageModel.getPageable());
         return success(all);
     }
 

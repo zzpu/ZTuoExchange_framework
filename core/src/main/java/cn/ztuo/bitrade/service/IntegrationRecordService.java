@@ -7,6 +7,7 @@ import cn.ztuo.bitrade.service.Base.BaseService;
 import cn.ztuo.bitrade.util.DateUtil;
 import cn.ztuo.bitrade.util.PredicateUtils;
 import cn.ztuo.bitrade.vo.IntegrationRecordVO;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.apache.commons.lang3.StringUtils;
@@ -48,6 +49,9 @@ public class IntegrationRecordService extends BaseService<IntegrationRecord> {
         Predicate predicate = PredicateUtils.getPredicate(booleanExpressions);
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(queryVo.getPageNum() - 1, queryVo.getPageSize(), sort);
+        if(predicate == null){
+            predicate =  new BooleanBuilder();
+        }
         return dao.findAll(predicate, pageable);
     }
 

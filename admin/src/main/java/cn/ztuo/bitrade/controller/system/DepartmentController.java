@@ -8,6 +8,7 @@ import cn.ztuo.bitrade.entity.Department;
 import cn.ztuo.bitrade.service.DepartmentService;
 import cn.ztuo.bitrade.util.BindingResultUtil;
 import cn.ztuo.bitrade.util.MessageResult;
+import com.querydsl.core.BooleanBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -76,7 +77,7 @@ public class DepartmentController extends BaseAdminController {
     @RequestMapping("all")
     @AccessLog(module = AdminModule.SYSTEM, operation = "所有部门Department")
     public MessageResult allDepartment(PageModel pageModel) {
-        Page<Department> all = departmentService.findAll(null, pageModel.getPageable());
+        Page<Department> all = departmentService.findAll(new BooleanBuilder(), pageModel.getPageable());
         return success(all);
     }
 
