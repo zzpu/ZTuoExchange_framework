@@ -43,7 +43,9 @@ public class TestController extends BaseController {
         logger.info("获取 所有币种rpc 是否正常");
         //rpc coin
         List<String> units = coinService.findAllRpcUnit();
-        if (units == null || units.size() == 0) return error("no rpc coin!");
+        if (units == null || units.size() == 0){
+            return error("no rpc coin!");
+        }
         logger.info("units = {}", units);
         //结果
         LinkedHashMap<String, ResponseEntity<MessageResult>> data = new LinkedHashMap<>(units.size());
