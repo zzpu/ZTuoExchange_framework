@@ -91,11 +91,13 @@ public class CoinController extends BaseAdminController {
     @AccessLog(module = AdminModule.SYSTEM, operation = "创建后台货币Coin")
     public MessageResult create(@Valid Coin coin, Double txFee, BindingResult bindingResult) {
         MessageResult result = BindingResultUtil.validate(bindingResult);
-        if (result != null)
+        if (result != null) {
             return result;
+        }
         Coin one = coinService.findOne(coin.getName());
-        if (one != null)
+        if (one != null) {
             return error(messageSource.getMessage("COIN_NAME_EXIST"));
+        }
         Coin oldCoin = coinService.findByUnit(coin.getUnit());
         if (oldCoin != null) {
             return error(messageSource.getMessage("COIN_UNIT_EXIST"));
@@ -137,9 +139,10 @@ public class CoinController extends BaseAdminController {
             @SessionAttribute(SysConstant.SESSION_ADMIN) Admin admin,
             String code,
             BindingResult bindingResult) {
-        MessageResult checkCode = checkCode(code, SysConstant.ADMIN_COIN_REVISE_PHONE_PREFIX + admin.getMobilePhone());
-        if (checkCode.getCode() != 0)
-            return checkCode;
+//        MessageResult checkCode = checkCode(code, SysConstant.ADMIN_COIN_REVISE_PHONE_PREFIX + admin.getMobilePhone());
+//        if (checkCode.getCode() != 0) {
+//            return checkCode;
+//        }
         Coin coin2 = coinService.findOne(coin.getName());
         notNull(coin2, "validate coin.name!");
         if (coin.getTxFee() != null) {
@@ -150,8 +153,9 @@ public class CoinController extends BaseAdminController {
         Assert.notNull(admin, messageSource.getMessage("DATA_EXPIRED_LOGIN_AGAIN"));
         notNull(coin.getName(), "validate coin.name!");
         MessageResult result = BindingResultUtil.validate(bindingResult);
-        if (result != null)
+        if (result != null) {
             return result;
+        }
         coinService.save(coin2);
         return success();
     }
@@ -275,15 +279,17 @@ public class CoinController extends BaseAdminController {
 
             if (object == null) {
                 MessageResult checkCode = checkCode(code, key);
-                if (checkCode.getCode() != 0)
+                if (checkCode.getCode() != 0) {
                     return checkCode;
+                }
             }
         }
         Coin coin = coinService.findByUnit(unit);
         BigDecimal balance = getRPCWalletBalance(coin.getUnit());
         logger.info("closeBalance:-------{}", balance);
-        if (amount.compareTo(balance) > 0)
+        if (amount.compareTo(balance) > 0) {
             return error(messageSource.getMessage("HOT_WALLET_BALANCE_POOL"));
+        }
         String url = "http://SERVICE-RPC-" + coin.getUnit() + "/rpc/transfer?address={1}&amount={2}&fee={3}";
         MessageResult result = restTemplate.getForObject(url,
                 MessageResult.class, coin.getColdWalletAddress().toString(), amount, coin.getMinerFee());
@@ -309,8 +315,9 @@ public class CoinController extends BaseAdminController {
     @AccessLog(module = AdminModule.SYSTEM, operation = "热钱包转账至冷钱包记录分页查询")
     public MessageResult page(PageModel pageModel, String unit) {
         List<BooleanExpression> booleanExpressions = new ArrayList<>();
-        if (!StringUtils.isEmpty(unit))
+        if (!StringUtils.isEmpty(unit)) {
             booleanExpressions.add(QHotTransferRecord.hotTransferRecord.unit.eq(unit));
+        }
         Page<HotTransferRecord> page = hotTransferRecordService.findAll(PredicateUtils.getPredicate
                 (booleanExpressions), pageModel);
         return success(messageSource.getMessage("SUCCESS"), page);

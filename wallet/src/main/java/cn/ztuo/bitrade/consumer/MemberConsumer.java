@@ -61,8 +61,11 @@ public class MemberConsumer {
             String account = "U" + json.getLong("uid") + GeneratorUtil.getNonceString(4);
             //远程RPC服务URL,后缀为币种单位
             String serviceName = "SERVICE-RPC-" + coin.getUnit();
+
+            logger.info("remote call:service={}", serviceName);
             try {
                 String url = "http://" + serviceName + "/rpc/address/{account}";
+
                 ResponseEntity<MessageResult> result = restTemplate.getForEntity(url, MessageResult.class, account);
                 logger.info("remote call:service={},result={}", serviceName, result);
                 if (result.getStatusCode().value() == 200) {
