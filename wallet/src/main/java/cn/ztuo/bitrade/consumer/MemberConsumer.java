@@ -60,7 +60,7 @@ public class MemberConsumer {
             Assert.notNull(memberWallet, "wallet null");
             String account = "U" + json.getLong("uid") + GeneratorUtil.getNonceString(4);
             //远程RPC服务URL,后缀为币种单位
-            String serviceName = "SERVICE-RPC-" + coin.getUnit();
+            String serviceName = "service-rpc-" + coin.getUnit().toLowerCase();
 
             logger.info("remote call:service={}", serviceName);
             try {

@@ -118,7 +118,7 @@ public class FinanceConsumer {
     }
 
     /**
-     * 处理提交请求,调用钱包rpc，自动转账
+     * 处理提币请求,调用钱包rpc，自动转账
      *
      * @param record
      */

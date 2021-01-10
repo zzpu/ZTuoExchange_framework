@@ -131,6 +131,13 @@ public class Coin {
     @Column(name = "has_legal", columnDefinition = "bit default 0", nullable = false)
     private Boolean hasLegal = false;
 
+
+    /**
+     * 是否是代币
+     */
+    @Column(name = "is_token", columnDefinition = "bit default 0", nullable = false)
+    private Boolean isToken = false;
+
     @Transient
     private BigDecimal allBalance ;
 
