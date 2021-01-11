@@ -40,6 +40,18 @@ import java.math.BigDecimal;
      */
     private String address;
 
+
+    /**
+     * token
+     */
+    private String token;
+
+
+    /**
+     * 合约地址
+     */
+    private String contract;
+
     @JsonIgnore
     @Version
     private int version;
