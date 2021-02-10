@@ -19,7 +19,9 @@ public class MonitorController {
     @RequestMapping("trader-overview")
     public JSONObject  traderOverview(String symbol){
         CoinTrader trader = factory.getTrader(symbol);
-        if(trader == null )return null;
+        if(trader == null ) {
+            return null;
+        }
         JSONObject result = new JSONObject();
         //卖盘信息
         JSONObject ask = new JSONObject();
@@ -39,7 +41,9 @@ public class MonitorController {
     @RequestMapping("trader-detail")
     public JSONObject  traderDetail(String symbol){
         CoinTrader trader = factory.getTrader(symbol);
-        if(trader == null )return null;
+        if(trader == null ) {
+            return null;
+        }
         JSONObject result = new JSONObject();
         //卖盘信息
         JSONObject ask = new JSONObject();
@@ -59,7 +63,9 @@ public class MonitorController {
     public Map<String,List<TradePlateItem>>  traderPlate(String symbol){
         Map<String,List<TradePlateItem>> result = new HashMap<>();
         CoinTrader trader = factory.getTrader(symbol);
-        if(trader == null )return null;
+        if(trader == null ) {
+            return null;
+        }
         result.put("bid",trader.getTradePlate(ExchangeOrderDirection.BUY).getItems());
         result.put("ask",trader.getTradePlate(ExchangeOrderDirection.SELL).getItems());
         return result;
@@ -69,7 +75,9 @@ public class MonitorController {
     public Map<String,JSONObject>  traderPlateMini(String symbol){
         Map<String,JSONObject> result = new HashMap<>();
         CoinTrader trader = factory.getTrader(symbol);
-        if(trader == null )return null;
+        if(trader == null ) {
+            return null;
+        }
         result.put("bid",trader.getTradePlate(ExchangeOrderDirection.BUY).toJSON(24));
         result.put("ask",trader.getTradePlate(ExchangeOrderDirection.SELL).toJSON(24));
         return result;
@@ -79,7 +87,9 @@ public class MonitorController {
     public Map<String,JSONObject>  traderPlateFull(String symbol){
         Map<String,JSONObject> result = new HashMap<>();
         CoinTrader trader = factory.getTrader(symbol);
-        if(trader == null )return null;
+        if(trader == null ) {
+            return null;
+        }
         result.put("bid",trader.getTradePlate(ExchangeOrderDirection.BUY).toJSON());
         result.put("ask",trader.getTradePlate(ExchangeOrderDirection.SELL).toJSON());
         return result;
