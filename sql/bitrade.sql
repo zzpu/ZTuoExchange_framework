@@ -1102,6 +1102,8 @@ CREATE TABLE `member` (
   `kyc_status` int(2) DEFAULT '0' COMMENT 'kyc等级',
   `generalize_total` bigint(20) DEFAULT '0' COMMENT '注册赠送积分',
   `inviter_parent_id` bigint(20) DEFAULT '0',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `UK_gc3jmn7c2abyo3wf6syln5t2i` (`username`),
   UNIQUE KEY `UK_mbmcqelty0fbrvxp1q58dn57t` (`email`),
